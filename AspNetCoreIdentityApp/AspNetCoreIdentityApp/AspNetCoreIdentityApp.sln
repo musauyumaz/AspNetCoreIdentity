@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{944F9856-C35B-4F3B-85DD-8E71D6E718D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{61447C45-05F9-4A72-A040-82820957BAF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Insfrastructure", "Insfrastructure", "{B74D571C-7EC0-403A-B09F-C6A9ABD4C7FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{CB098F95-DF4F-4D0B-9F52-14CF36EC4994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Domain", "server\src\Core\AspNetCoreIdentityApp.Domain\AspNetCoreIdentityApp.Domain.csproj", "{1F0DAC8D-4B75-4B9A-9553-FE7B4132069E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Application", "server\src\Core\AspNetCoreIdentityApp.Application\AspNetCoreIdentityApp.Application.csproj", "{1742AACF-0702-4944-AA2E-A4330E97EF2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Persistence", "server\src\Infrastructure\AspNetCoreIdentityApp.Persistence\AspNetCoreIdentityApp.Persistence.csproj", "{4BB5202B-E52B-4725-A372-E83AA1523FFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Infrastructure", "server\src\Infrastructure\AspNetCoreIdentityApp.Infrastructure\AspNetCoreIdentityApp.Infrastructure.csproj", "{20D1EBC5-D784-4220-A192-05836A70744B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.API", "server\src\Presentation\AspNetCoreIdentityApp.API\AspNetCoreIdentityApp.API.csproj", "{61D90722-B3E8-44E4-BE33-8B2786210D59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{22445D3D-776E-4799-B620-F3F3CEA16526}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.MVC", "client\AspNetCoreIdentityApp.MVC\AspNetCoreIdentityApp.MVC.csproj", "{462E9CF2-F482-4CC0-8533-F3342CE3D009}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F0DAC8D-4B75-4B9A-9553-FE7B4132069E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0DAC8D-4B75-4B9A-9553-FE7B4132069E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0DAC8D-4B75-4B9A-9553-FE7B4132069E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0DAC8D-4B75-4B9A-9553-FE7B4132069E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1742AACF-0702-4944-AA2E-A4330E97EF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1742AACF-0702-4944-AA2E-A4330E97EF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1742AACF-0702-4944-AA2E-A4330E97EF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1742AACF-0702-4944-AA2E-A4330E97EF2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BB5202B-E52B-4725-A372-E83AA1523FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BB5202B-E52B-4725-A372-E83AA1523FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BB5202B-E52B-4725-A372-E83AA1523FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BB5202B-E52B-4725-A372-E83AA1523FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D1EBC5-D784-4220-A192-05836A70744B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D1EBC5-D784-4220-A192-05836A70744B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D1EBC5-D784-4220-A192-05836A70744B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20D1EBC5-D784-4220-A192-05836A70744B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D90722-B3E8-44E4-BE33-8B2786210D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D90722-B3E8-44E4-BE33-8B2786210D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D90722-B3E8-44E4-BE33-8B2786210D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D90722-B3E8-44E4-BE33-8B2786210D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{462E9CF2-F482-4CC0-8533-F3342CE3D009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{462E9CF2-F482-4CC0-8533-F3342CE3D009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{462E9CF2-F482-4CC0-8533-F3342CE3D009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{462E9CF2-F482-4CC0-8533-F3342CE3D009}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{944F9856-C35B-4F3B-85DD-8E71D6E718D1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{61447C45-05F9-4A72-A040-82820957BAF5} = {944F9856-C35B-4F3B-85DD-8E71D6E718D1}
+		{B74D571C-7EC0-403A-B09F-C6A9ABD4C7FF} = {944F9856-C35B-4F3B-85DD-8E71D6E718D1}
+		{CB098F95-DF4F-4D0B-9F52-14CF36EC4994} = {944F9856-C35B-4F3B-85DD-8E71D6E718D1}
+		{1F0DAC8D-4B75-4B9A-9553-FE7B4132069E} = {61447C45-05F9-4A72-A040-82820957BAF5}
+		{1742AACF-0702-4944-AA2E-A4330E97EF2B} = {61447C45-05F9-4A72-A040-82820957BAF5}
+		{4BB5202B-E52B-4725-A372-E83AA1523FFB} = {B74D571C-7EC0-403A-B09F-C6A9ABD4C7FF}
+		{20D1EBC5-D784-4220-A192-05836A70744B} = {B74D571C-7EC0-403A-B09F-C6A9ABD4C7FF}
+		{61D90722-B3E8-44E4-BE33-8B2786210D59} = {CB098F95-DF4F-4D0B-9F52-14CF36EC4994}
+		{462E9CF2-F482-4CC0-8533-F3342CE3D009} = {22445D3D-776E-4799-B620-F3F3CEA16526}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4815582C-348C-4C53-8EC1-EDA13624C0CC}
+	EndGlobalSection
+EndGlobal
