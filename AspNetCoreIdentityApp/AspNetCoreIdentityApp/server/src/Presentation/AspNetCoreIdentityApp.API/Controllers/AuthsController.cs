@@ -10,5 +10,10 @@ namespace AspNetCoreIdentityApp.API.Controllers
         {
             return Ok("Merhaba Dünya");
         }
+
+        public async Task<IActionResult> SignUp()
+        {
+            return Ok("Merhaba Dünya");
+        }
     }
 }

@@ -1,8 +1,10 @@
+using AspNetCoreIdentityApp.MVC.Models;
+using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreIdentityApp.MVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(IHttpClientService _httpClientService) : Controller
     {
         public IActionResult Index()
         {
@@ -13,8 +15,14 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         {
             return View();
         }
-        public IActionResult SignUp()
+        public async Task<IActionResult> SignUp()
         {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpViewModel signUpViewModel)
+        {
+            var data = await _httpClientService.SendAsync<SignUpViewModel>(new("auths"));
             return View();
         }
     }
