@@ -10,7 +10,6 @@ public static class ServiceRegistration
 {
     public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var sql = configuration.GetConnectionString("SQLConnection");
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SQLConnection")));
         services.AddIdentity<User, Role>().AddEntityFrameworkStores<AppDbContext>();
     }
