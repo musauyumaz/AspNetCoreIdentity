@@ -1,5 +1,6 @@
 using AspNetCoreIdentityApp.MVC.Models;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
+using AspNetCoreIdentityApp.MVC.Services.Concretes;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,8 +35,12 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
 
 app.Run();
