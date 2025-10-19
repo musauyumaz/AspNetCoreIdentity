@@ -8,7 +8,7 @@ public sealed record RequestParameter(
  string? QueryString = null,
  HttpHeaders? HttpHeaders = null,
  string? BaseUrl = null,
- Uri? FullEndpoint = null,
+ string? FullEndpoint = null,
  HttpMethod? Method = null,
  HttpContent? Content = null,
  CancellationToken CancellationToken = default

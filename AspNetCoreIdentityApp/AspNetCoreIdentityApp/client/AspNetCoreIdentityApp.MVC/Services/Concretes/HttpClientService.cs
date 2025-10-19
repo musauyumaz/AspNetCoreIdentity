@@ -1,61 +1,55 @@
 ﻿using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
-using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
-public sealed class HttpClientService : IHttpClientService
+namespace AspNetCoreIdentityApp.MVC.Services.Concretes
 {
-    private readonly HttpClient _httpClient;
-
-    public HttpClientService(HttpClient httpClient)
+    public class HttpClientService(HttpClient _httpClient, IConfiguration _configuration) : IHttpClientService
     {
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-    }
-
-    public async Task<HttpResponseMessage> SendAsync(RequestParameter requestParameter)
-    {
-        if (requestParameter is null)
-            throw new ArgumentNullException(nameof(requestParameter));
-
-        HttpRequestMessage? request = BuildHttpRequest(requestParameter);
-        return await _httpClient.SendAsync(request, requestParameter.CancellationToken);
-    }
-
-    public async Task<ApiResult<T>> SendAsync<T>(RequestParameter requestParameter, JsonSerializerOptions? options = null)
-    {
-        HttpResponseMessage? response = await SendAsync(requestParameter);
-        response.EnsureSuccessStatusCode();
-
-        await using Stream? stream = await response.Content.ReadAsStreamAsync(requestParameter.CancellationToken);
-        ApiResult<T>? apiResult = await JsonSerializer.DeserializeAsync<ApiResult<T>>(stream, options, requestParameter.CancellationToken);
-
-        if (apiResult is null)
-            throw new InvalidOperationException("API returned empty response");
-
-        return apiResult;
-    }
-
-    private static HttpRequestMessage BuildHttpRequest(RequestParameter requestParameter)
-    {
-        var uri = requestParameter.FullEndpoint ?? new UriBuilder(requestParameter.BaseUrl)
+        public async Task<TResponse> DeleteAsync<TResponse>(RequestParameter requestParameter, string id)
         {
-            Path = $"{requestParameter.Controller}/{requestParameter.Action}".TrimEnd('/'),
-            Query = string.IsNullOrWhiteSpace(requestParameter.QueryString)
-                ? string.Empty
-                : requestParameter.QueryString.TrimStart('?')
-        }.Uri;
-
-        var request = new HttpRequestMessage(requestParameter.Method ?? HttpMethod.Get, uri);
-
-        if (requestParameter.HttpHeaders is not null)
-        {
-            foreach (var header in requestParameter.HttpHeaders)
-                request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            StringBuilder urlBuilder = new StringBuilder();
+            urlBuilder.Append(Url(requestParameter));
+            urlBuilder.Append(!String.IsNullOrEmpty(id) ? "/" + id : "");
+            HttpResponseMessage httpResponseMessage = await _httpClient.DeleteAsync(urlBuilder.ToString());
+            return await httpResponseMessage.Content.ReadFromJsonAsync<TResponse>();
         }
 
-        if (requestParameter.Content is not null)
-            request.Content = requestParameter.Content;
+        public async Task<TResponse> GetAsync<TResponse>(RequestParameter requestParameter, string id = null)
+        {
+            JsonSerializerOptions options = new();
+            options.PropertyNameCaseInsensitive = true;
+            StringBuilder urlBuilder = new StringBuilder();
+            urlBuilder.Append(Url(requestParameter));
+            urlBuilder.Append(!String.IsNullOrEmpty(id) ? id : "");
+            return await _httpClient.GetFromJsonAsync<TResponse>(urlBuilder.ToString(), options);
+        }
 
-        return request;
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(RequestParameter requestParameter, TRequest body)
+        {
+            JsonSerializerOptions options = new();
+            options.PropertyNameCaseInsensitive = true;
+            string url = Url(requestParameter);
+            HttpResponseMessage httpResponseMessage = await _httpClient.PostAsJsonAsync<TRequest>(url, body, options);
+            return await httpResponseMessage.Content.ReadFromJsonAsync<TResponse>();
+        }
+
+        public async Task<TResponse> PutAsync<TRequest, TResponse>(RequestParameter requestParameter, TRequest body)
+        {
+            string url = Url(requestParameter);
+            HttpResponseMessage httpResponseMessage = await _httpClient.PutAsJsonAsync<TRequest>(url, body);
+            return await httpResponseMessage.Content.ReadFromJsonAsync<TResponse>();
+        }
+        private string Url(RequestParameter requestParameter)
+        {
+            StringBuilder urlBuilder = new StringBuilder();
+            urlBuilder.Append(!String.IsNullOrEmpty(requestParameter.BaseUrl) ? requestParameter.BaseUrl : _configuration["ApiSettings:BaseUrl"]);
+            urlBuilder.Append(requestParameter.Controller + "/");
+            urlBuilder.Append(!String.IsNullOrEmpty(requestParameter.Action) ? requestParameter.Action : "");
+            urlBuilder.Append((!String.IsNullOrEmpty(requestParameter.QueryString) ? "?" + requestParameter.QueryString : ""));
+            return !String.IsNullOrEmpty(requestParameter.FullEndpoint) ? requestParameter.FullEndpoint : urlBuilder.ToString();
+
+        }
     }
 }
