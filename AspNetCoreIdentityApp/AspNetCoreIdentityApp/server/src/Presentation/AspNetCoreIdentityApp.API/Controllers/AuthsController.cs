@@ -1,6 +1,7 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignUp;
 using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
+using AspNetCoreIdentityApp.Application.Features.Auths.Queries.GetAll;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,17 @@ namespace AspNetCoreIdentityApp.API.Controllers
             return Ok("Merhaba Dünya");
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody]SignUpCommandRequest signUpCommandRequest)
+        public async Task<IActionResult> SignUp([FromBody]SignUpAuthCommandRequest signUpCommandRequest)
         {
             Result<UserDTO> data = await _mediator.Send(signUpCommandRequest);
             return StatusCode((int)data.StatusCode,data);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllUsersQueryRequest getAllUsersQueryRequest)
+        {
+            Result<List<UserDTO>> data  = await _mediator.Send(getAllUsersQueryRequest);
+            return StatusCode((int)data.StatusCode, data);
         }
     }
 }

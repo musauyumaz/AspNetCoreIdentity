@@ -1,4 +1,4 @@
 ﻿namespace AspNetCoreIdentityApp.Application.Features.Auths.DTOs
 {
-    public readonly struct UserDTO(string username, string userId);
+    public record UserDTO(string Id,string UserName, string Email, string PhoneNumber);
 }
