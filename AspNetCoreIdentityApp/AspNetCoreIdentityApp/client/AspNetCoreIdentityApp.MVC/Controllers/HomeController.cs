@@ -2,6 +2,7 @@
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AspNetCoreIdentityApp.MVC.Controllers
 {
@@ -44,26 +45,31 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
             return View();
         }
 
-        //}    [HttpPost]
-        //    public async Task<IActionResult> SignIn(SignInViewModel signInViewModel)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View();
-        //        }
-        //        ApiResult<string> data = await _httpClientService.PostAsync<SignInViewModel, ApiResult<string>>(new(Controller: "Auths", Action: "SignIn"), signInViewModel);
-        //        if (data.IsSucceed)
-        //        {
-        //            TempData["SuccessMessage"] = "Giriş işlemi başarılı.";
-        //            return RedirectToAction(nameof(HomeController.Index));
-        //        }
-        //        ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
-        //        return View();
-        //    }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInViewModel signInViewModel, string? returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Action("Index", "Home");
+
+            ApiResult<UserDTO> data = await _httpClientService.PostAsync<TestS, ApiResult<UserDTO>>(new(Controller: "Auths", Action: "login"), new(signInViewModel.EmailOrUserName, signInViewModel.Password));
+
+            if (data.IsSucceed)
+            {
+                TempData["SuccessMessage"] = "Giriş işlemi başarılı.";
+
+                return RedirectToAction(returnUrl);
+            }
+
+            ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
+
+            return View();
+        }
     }
+
+    record TestS(string UserNameOrEmail, string Password);
 }

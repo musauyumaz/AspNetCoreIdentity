@@ -5,13 +5,14 @@ namespace AspNetCoreIdentityApp.MVC.Models
     public record SignInViewModel
     {
         [Required(ErrorMessage = "Kullanıcı Ad Email alanı boş bırakılamaz")]
-        [Display(Name = "Kullanıcı Ad veya Email :")]
+        [Display(Name = "Kullanıcı Ad veya Email")]
         public string EmailOrUserName { get; init; }
 
         [Required(ErrorMessage = "Şifre alanı boş bırakılamaz")]
-        [Display(Name = "Şifre :")]
+        [Display(Name = "Şifre")]
         public string Password { get; init; }
 
+        [Display(Name = "Beni Hatırla")]
         public bool RememberMe { get; set; }
     }
 }
