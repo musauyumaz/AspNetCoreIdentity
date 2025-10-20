@@ -1,4 +1,5 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
+using AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignUp;
 using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
 using AspNetCoreIdentityApp.Application.Features.Auths.Queries.GetAll;
@@ -11,9 +12,11 @@ namespace AspNetCoreIdentityApp.API.Controllers
     [ApiController]
     public class AuthsController(IMediator _mediator) : ControllerBase
     {
-        public async Task<IActionResult> Login()
+        [HttpPost("Login")]
+        public async Task<IActionResult> SignIn([FromBody]SignInAuthCommandRequest signInAuthCommandRequest)
         {
-            return Ok("Merhaba Dünya");
+            Result<UserDTO> data = await _mediator.Send(signInAuthCommandRequest);
+            return StatusCode((int)data.StatusCode, data);
         }
         [HttpPost]
         public async Task<IActionResult> SignUp([FromBody]SignUpAuthCommandRequest signUpCommandRequest)

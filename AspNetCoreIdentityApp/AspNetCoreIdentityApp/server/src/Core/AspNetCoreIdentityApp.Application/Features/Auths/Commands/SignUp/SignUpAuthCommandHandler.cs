@@ -15,7 +15,7 @@ namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignUp
             var data = await _userManager.CreateAsync(request.Adapt<User>(),request.PasswordConfirm);
             return data.Succeeded
                 ? Result<UserDTO>.Success(request.Adapt<UserDTO>())
-                : Result<UserDTO>.Fail(string.Join(", ", data.Errors.Select(e => e.Description)));
+                : Result<UserDTO>.Fail(string.Join(",\n", data.Errors.Select(e => e.Description)));
         }
     }
 }
