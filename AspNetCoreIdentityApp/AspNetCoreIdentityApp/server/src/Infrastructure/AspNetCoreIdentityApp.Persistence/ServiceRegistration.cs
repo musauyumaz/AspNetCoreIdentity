@@ -1,6 +1,7 @@
 ﻿using AspNetCoreIdentityApp.Domain.Entities;
 using AspNetCoreIdentityApp.Persistence.Contexts;
-using AspNetCoreIdentityApp.Persistence.Identity;
+using AspNetCoreIdentityApp.Persistence.Identity.Localizations;
+using AspNetCoreIdentityApp.Persistence.Identity.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,7 @@ public static class ServiceRegistration
             options.Password.RequireDigit = false;
 
         }).AddUserValidator<UserValidator>()
+        .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
         .AddPasswordValidator<PasswordValidator>()
         .AddEntityFrameworkStores<AppDbContext>();
     }

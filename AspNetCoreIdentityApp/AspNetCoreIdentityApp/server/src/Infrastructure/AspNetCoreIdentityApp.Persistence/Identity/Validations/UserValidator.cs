@@ -1,7 +1,7 @@
 ﻿using AspNetCoreIdentityApp.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace AspNetCoreIdentityApp.Persistence.Identity
+namespace AspNetCoreIdentityApp.Persistence.Identity.Validations
 {
     public sealed class UserValidator : IUserValidator<User>
     {
