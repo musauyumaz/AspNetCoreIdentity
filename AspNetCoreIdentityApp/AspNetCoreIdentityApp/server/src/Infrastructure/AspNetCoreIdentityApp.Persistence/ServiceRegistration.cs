@@ -1,5 +1,6 @@
 ﻿using AspNetCoreIdentityApp.Domain.Entities;
 using AspNetCoreIdentityApp.Persistence.Contexts;
+using AspNetCoreIdentityApp.Persistence.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,6 @@ public static class ServiceRegistration
             options.Password.RequireUppercase = false;
             options.Password.RequireDigit = false;
 
-        }).AddEntityFrameworkStores<AppDbContext>();
+        }).AddPasswordValidator<PasswordValidator>().AddEntityFrameworkStores<AppDbContext>();
     }
 }

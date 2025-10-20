@@ -19,6 +19,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AspNetCoreIdentityApp.Application\AspNetCoreIdentityApp.Application.csproj" />
     <ProjectReference Include="..\..\Core\AspNetCoreIdentityApp.Domain\AspNetCoreIdentityApp.Domain.csproj" />
+    <ProjectReference Include="..\AspNetCoreIdentityApp.Infrastructure\AspNetCoreIdentityApp.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validations\" />
   </ItemGroup>
 
 </Project>
