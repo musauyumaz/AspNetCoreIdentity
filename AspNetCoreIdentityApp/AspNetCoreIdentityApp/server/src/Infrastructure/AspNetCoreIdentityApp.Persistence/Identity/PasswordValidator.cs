@@ -10,12 +10,12 @@ namespace AspNetCoreIdentityApp.Persistence.Identity
             var errors = new List<IdentityError>();
             if (password.ToLower().Contains(user.UserName.ToLower()))
             {
-                errors.Add(new() { Code = "PasswordNoContainUserName", Description = "Şifre alanı kullanıcı adı içeremez" });
+                errors.Add(new() { Code = "PasswordContainUserName", Description = "Şifre alanı kullanıcı adı içeremez" });
             }
 
             if (password.ToLower().StartsWith("1234"))
             {
-                errors.Add(new() { Code = "PasswordNoStartWith1234", Description="Şifre alanı 1234 ile başlayamaz" });
+                errors.Add(new() { Code = "PasswordStartWith1234", Description="Şifre alanı 1234 ile başlayamaz" });
             }
 
             return await Task.FromResult(errors.Count == 0 ? IdentityResult.Success : IdentityResult.Failed(errors.ToArray()));

@@ -23,6 +23,8 @@ public static class ServiceRegistration
             options.Password.RequireUppercase = false;
             options.Password.RequireDigit = false;
 
-        }).AddPasswordValidator<PasswordValidator>().AddEntityFrameworkStores<AppDbContext>();
+        }).AddUserValidator<UserValidator>()
+        .AddPasswordValidator<PasswordValidator>()
+        .AddEntityFrameworkStores<AppDbContext>();
     }
 }
