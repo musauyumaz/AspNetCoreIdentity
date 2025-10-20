@@ -11,6 +11,17 @@ public static class ServiceRegistration
     public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SQLConnection")));
-        services.AddIdentity<User, Role>().AddEntityFrameworkStores<AppDbContext>();
+        services.AddIdentity<User, Role>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
+            options.User.AllowedUserNameCharacters ="abcdefghijklmnopqrstuvwxyz0123456789_";
+
+            options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireDigit = false;
+
+        }).AddEntityFrameworkStores<AppDbContext>();
     }
 }
