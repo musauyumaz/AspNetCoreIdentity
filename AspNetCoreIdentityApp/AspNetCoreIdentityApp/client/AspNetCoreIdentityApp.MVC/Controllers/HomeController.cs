@@ -37,10 +37,33 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
                 return RedirectToAction(nameof(HomeController.SignUp));
             }
-            
+
             ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
-            
+
             return View();
         }
+
+        [HttpGet]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        //}    [HttpPost]
+        //    public async Task<IActionResult> SignIn(SignInViewModel signInViewModel)
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return View();
+        //        }
+        //        ApiResult<string> data = await _httpClientService.PostAsync<SignInViewModel, ApiResult<string>>(new(Controller: "Auths", Action: "SignIn"), signInViewModel);
+        //        if (data.IsSucceed)
+        //        {
+        //            TempData["SuccessMessage"] = "Giriş işlemi başarılı.";
+        //            return RedirectToAction(nameof(HomeController.Index));
+        //        }
+        //        ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
+        //        return View();
+        //    }
     }
 }
