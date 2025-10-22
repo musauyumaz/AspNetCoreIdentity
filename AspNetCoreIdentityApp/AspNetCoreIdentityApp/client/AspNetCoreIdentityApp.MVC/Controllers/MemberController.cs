@@ -7,10 +7,9 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 {
     public class MemberController : Controller
     {
-        public async Task<IActionResult> SignOut()
+        public async Task SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index","Home");
         }
     }
 }
