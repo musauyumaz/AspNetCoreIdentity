@@ -1,6 +1,7 @@
 using AspNetCoreIdentityApp.MVC.Models;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Concretes;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,15 @@ builder.Services.AddHttpClient<IHttpClientService, HttpClientService>((sp, clien
     client.DefaultRequestHeaders.Add("Accept", options.DefaultAcceptHeader);
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "AppCookie";
+        options.LoginPath = "/Home/SignIn";
+        options.ExpireTimeSpan = TimeSpan.FromDays(60);
+        options.SlidingExpiration = true;
+    });
+
 
 var app = builder.Build();
 
@@ -29,6 +39,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

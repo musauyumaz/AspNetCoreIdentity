@@ -1,7 +1,10 @@
 ﻿using AspNetCoreIdentityApp.MVC.Models;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AspNetCoreIdentityApp.MVC.Controllers
@@ -60,9 +63,26 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
             if (data.IsSucceed)
             {
-                TempData["SuccessMessage"] = "Giriş işlemi başarılı.";
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, data.Data.Id ?? string.Empty),
+                    new Claim(ClaimTypes.Name, data.Data.UserName ?? string.Empty),
+                    new Claim(ClaimTypes.Email, data.Data.Email ?? string.Empty)
+                };
 
-                return RedirectToAction(returnUrl);
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(claimsIdentity);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = signInViewModel.RememberMe,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(60)
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
+
+                TempData["SuccessMessage"] = "Giriş işlemi başarılı.";
+                return RedirectToAction("Index");
             }
 
             ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
