@@ -18,7 +18,7 @@ namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn
             if (hasUser is null)
                 return Result<UserDTO>.Fail("Kullanıcı Adı/Email veya Parola Yanlış!");
 
-            SignInResult? result = await _signInManager.PasswordSignInAsync(hasUser,request.Password, request.RememberMe,true);
+            SignInResult? result = await _signInManager.CheckPasswordSignInAsync(hasUser,request.Password, request.RememberMe);
             if (result.IsLockedOut)
                 return Result<UserDTO>.Fail("Hesabınız 3 dakikalığına kilitlenmiştir. Lütfen 3 dakika sonra tekrar deneyiniz.");
 
