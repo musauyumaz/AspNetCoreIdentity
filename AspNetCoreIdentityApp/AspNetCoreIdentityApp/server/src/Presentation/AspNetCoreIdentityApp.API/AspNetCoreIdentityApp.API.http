@@ -9,12 +9,22 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "userName": "",
-  "email": "",
-  "phoneNumber": "",
-  "password": "",
-  "passwordConfirm": ""
+  "userName": "masdad123",
+  "email": "musa1@gmail.com",
+  "phoneNumber": "5555555555",
+  "password": "Password12*",
+  "passwordConfirm": "Password12*"
 }
 
 ###
 
+POST {{AspNetCoreIdentityApp.API_HostAddress}}/auths/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userNameOrEmail": "ahmet1",
+  "password" : "ahmet2"
+}
+
+###
