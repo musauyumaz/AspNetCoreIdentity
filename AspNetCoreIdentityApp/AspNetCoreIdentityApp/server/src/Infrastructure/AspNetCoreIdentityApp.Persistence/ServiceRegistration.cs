@@ -24,6 +24,9 @@ public static class ServiceRegistration
             options.Password.RequireUppercase = false;
             options.Password.RequireDigit = false;
 
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+            options.Lockout.MaxFailedAccessAttempts = 3;
+
         }).AddUserValidator<UserValidator>()
         .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
         .AddPasswordValidator<PasswordValidator>()

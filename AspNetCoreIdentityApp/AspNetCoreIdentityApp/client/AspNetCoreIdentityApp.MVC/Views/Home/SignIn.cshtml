@@ -4,12 +4,14 @@
 }
 <div class="row">
     <div class="col-md-4 offset-md-4">
-        <h2>Kullannıcı Giriş</h2>
+        <h2>Kullanıcı Giriş</h2>
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <form asp-action="SignIn" asp-controller="Home" method="post">
             <div class="mb-3">
-                <label class="form-label" asp-for="EmailOrUserName"></label>
-                <input type="text" class="form-control" asp-for="EmailOrUserName">
-                <span class="text-danger" asp-validation-for="EmailOrUserName"></span>
+                <label class="form-label" asp-for="UserNameOrEmail"></label>
+                <input type="text" class="form-control" asp-for="UserNameOrEmail">
+                <span class="text-danger" asp-validation-for="UserNameOrEmail"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Password" class="form-label"></label>

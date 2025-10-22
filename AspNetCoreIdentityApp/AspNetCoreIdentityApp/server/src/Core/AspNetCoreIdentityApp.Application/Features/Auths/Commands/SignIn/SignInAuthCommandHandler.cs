@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn
 {
-    public readonly record struct SignInAuthCommandRequest(string UserNameOrEmail,string Password) : IRequest<Result<UserDTO>>;
+    public readonly record struct SignInAuthCommandRequest(string UserNameOrEmail,string Password, bool RememberMe) : IRequest<Result<UserDTO>>;
 
     public sealed class SignInAuthCommandHandler(SignInManager<User> _signInManager) : IRequestHandler<SignInAuthCommandRequest, Result<UserDTO>>
     {
@@ -16,13 +16,15 @@ namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn
             User? hasUser = await _signInManager.UserManager.FindByNameAsync(request.UserNameOrEmail) ?? await _signInManager.UserManager.FindByEmailAsync(request.UserNameOrEmail);
 
             if (hasUser is null)
-                return Result<UserDTO>.Fail("Kullanıcı Adı veya Email Yanlış!");
+                return Result<UserDTO>.Fail("Kullanıcı Adı/Email veya Parola Yanlış!");
 
-            SignInResult? result = await _signInManager.PasswordSignInAsync(hasUser,request.Password, false,false);
+            SignInResult? result = await _signInManager.PasswordSignInAsync(hasUser,request.Password, request.RememberMe,true);
+            if (result.IsLockedOut)
+                return Result<UserDTO>.Fail("Hesabınız 3 dakikalığına kilitlenmiştir. Lütfen 3 dakika sonra tekrar deneyiniz.");
 
             return result.Succeeded
                 ? Result<UserDTO>.Success(hasUser.Adapt<UserDTO>())
-                : Result<UserDTO>.Fail("Kullanıcı Adı veya Email Yanlış!");
+                : Result<UserDTO>.Fail($"Kullanıcı Adı/Email veya Parola Yanlış! Başarısız Giriş Sayısı : {hasUser.AccessFailedCount} ");
         }
     }
 }

@@ -6,7 +6,7 @@ namespace AspNetCoreIdentityApp.MVC.Models
     {
         [Required(ErrorMessage = "Kullanıcı Ad Email alanı boş bırakılamaz")]
         [Display(Name = "Kullanıcı Ad veya Email")]
-        public string EmailOrUserName { get; init; }
+        public string UserNameOrEmail { get; init; }
 
         [Required(ErrorMessage = "Şifre alanı boş bırakılamaz")]
         [Display(Name = "Şifre")]

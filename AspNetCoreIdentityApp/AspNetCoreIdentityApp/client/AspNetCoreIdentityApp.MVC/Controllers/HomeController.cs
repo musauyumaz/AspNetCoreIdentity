@@ -56,7 +56,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         {
             returnUrl = returnUrl ?? Url.Action("Index", "Home");
 
-            ApiResult<UserDTO> data = await _httpClientService.PostAsync<TestS, ApiResult<UserDTO>>(new(Controller: "Auths", Action: "login"), new(signInViewModel.EmailOrUserName, signInViewModel.Password));
+            ApiResult<UserDTO> data = await _httpClientService.PostAsync<SignInViewModel, ApiResult<UserDTO>>(new(Controller: "Auths", Action: "login"), signInViewModel);
 
             if (data.IsSucceed)
             {
@@ -70,6 +70,4 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             return View();
         }
     }
-
-    record TestS(string UserNameOrEmail, string Password);
 }
