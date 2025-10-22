@@ -1,6 +1,30 @@
-@AspNetCoreIdentityApp.API_HostAddress = http://localhost:5175
+@AspNetCoreIdentityApp.API_HostAddress = http://localhost:5175/api
 
-GET {{AspNetCoreIdentityApp.API_HostAddress}}/weatherforecast/
+GET {{AspNetCoreIdentityApp.API_HostAddress}}/auths/
 Accept: application/json
+
+###
+POST {{AspNetCoreIdentityApp.API_HostAddress}}/auths
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userName": "masdad123",
+  "email": "musa1@gmail.com",
+  "phoneNumber": "5555555555",
+  "password": "Password12*",
+  "passwordConfirm": "Password12*"
+}
+
+###
+
+POST {{AspNetCoreIdentityApp.API_HostAddress}}/auths/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userNameOrEmail": "ahmet1",
+  "password" : "ahmet2"
+}
 
 ###
