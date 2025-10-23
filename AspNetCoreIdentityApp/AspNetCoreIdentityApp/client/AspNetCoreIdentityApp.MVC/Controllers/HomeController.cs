@@ -88,5 +88,10 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> ResetPassword()
+        {
+            return View();
+        }
     }
 }
