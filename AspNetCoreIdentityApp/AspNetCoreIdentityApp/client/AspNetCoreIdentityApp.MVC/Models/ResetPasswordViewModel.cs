@@ -2,7 +2,7 @@
 
 namespace AspNetCoreIdentityApp.MVC.Models
 {
-    public record ResetPasswordViewModel
+    public record ForgetPasswordViewModel
     {
         [Required(ErrorMessage = "Email alanı boş bırakılamaz")]
         [EmailAddress(ErrorMessage = "Geçersiz Email Adresi")]

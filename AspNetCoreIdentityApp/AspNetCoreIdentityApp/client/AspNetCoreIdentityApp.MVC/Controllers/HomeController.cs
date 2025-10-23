@@ -89,9 +89,16 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ResetPassword()
+        public async Task<IActionResult> ForgetPassword()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel resetPasswordViewModel)
+        {
+
+            TempData["SuccessMessage"] = "Şifre sıfırlama linki email adresinize gönderilmiştir.";
+            return RedirectToAction(nameof(ForgetPassword));
         }
     }
 }
