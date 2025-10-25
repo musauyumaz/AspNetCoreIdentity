@@ -1025,3 +1025,4 @@ $RECYCLE.BIN/
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
+/AspNetCoreIdentityApp/AspNetCoreIdentityApp/server/src/Presentation/AspNetCoreIdentityApp.API/AspNetCoreIdentityApp.API.http

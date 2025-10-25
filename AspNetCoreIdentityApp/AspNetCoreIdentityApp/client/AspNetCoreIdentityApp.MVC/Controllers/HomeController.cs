@@ -96,6 +96,13 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel resetPasswordViewModel)
         {
+            var data = await _httpClientService.PostAsync<ForgetPasswordViewModel, ApiResult<string>>(new(Controller: "Auths", Action: "ForgetPassword"), resetPasswordViewModel);
+
+            if (!data.IsSucceed)
+            {
+                ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
+                return View();
+            }
 
             TempData["SuccessMessage"] = "Şifre sıfırlama linki email adresinize gönderilmiştir.";
             return RedirectToAction(nameof(ForgetPassword));

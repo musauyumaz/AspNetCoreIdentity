@@ -28,3 +28,8 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{AspNetCoreIdentityApp.API_HostAddress}}/auths/SendTestEmail
+Accept: application/json
+Content-Type: application/json
+
