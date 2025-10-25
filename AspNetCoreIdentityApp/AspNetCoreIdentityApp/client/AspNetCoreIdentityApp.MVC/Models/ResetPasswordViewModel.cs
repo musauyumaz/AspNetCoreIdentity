@@ -2,11 +2,17 @@
 
 namespace AspNetCoreIdentityApp.MVC.Models
 {
-    public record ForgetPasswordViewModel
+    public record ResetPasswordViewModel
     {
-        [Required(ErrorMessage = "Email alanı boş bırakılamaz")]
-        [EmailAddress(ErrorMessage = "Geçersiz Email Adresi")]
-        [Display(Name = "Email :")]
-        public string Email { get; init; }
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Şifre alanı boş bırakılamaz")]
+        [Display(Name = "Şifre :")]
+        public string Password { get; init; }
+
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password), ErrorMessage = "Şifreler Uyuşmuyor")]
+        [Required(ErrorMessage = "Şifre Tekrar alanı boş bırakılamaz")]
+        [Display(Name = "Şifre Tekrar :")]
+        public string PasswordConfirm { get; init; }
     }
 }

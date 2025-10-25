@@ -8,6 +8,7 @@ namespace AspNetCoreIdentityApp.MVC.Models
         [Display(Name = "Kullanıcı Ad veya Email")]
         public string UserNameOrEmail { get; init; }
 
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre alanı boş bırakılamaz")]
         [Display(Name = "Şifre")]
         public string Password { get; init; }

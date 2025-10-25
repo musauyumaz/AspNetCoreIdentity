@@ -107,5 +107,31 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             TempData["SuccessMessage"] = "Şifre sıfırlama linki email adresinize gönderilmiştir.";
             return RedirectToAction(nameof(ForgetPassword));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(string userId, string token)
+        {
+            TempData["userId"] = userId;
+            TempData["token"] = token;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
+        {
+            string? userId = TempData["userId"].ToString();
+            string? token = TempData["token"].ToString();
+
+            var result =  await _httpClientService.PostAsync<ResetPasswordDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ResetPassword"),new(userId,token, request.Password));
+
+            if (!result.IsSucceed)
+                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");
+
+            TempData["SuccessMessage"] = result.Data;
+
+            return View();
+        }
     }
+
+    public record ResetPasswordDTO(string UserId, string Token, string Password);
 }
