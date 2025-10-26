@@ -1,5 +1,5 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
-using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
+using AspNetCoreIdentityApp.Application.Features.Users.DTOs;
 using AspNetCoreIdentityApp.Domain.Entities;
 using Mapster;
 using Mediator;

@@ -5,12 +5,12 @@ using Mediator;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 
-namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.ForgetPassword
+namespace AspNetCoreIdentityApp.Application.Features.Users.Commands.ForgetPassword
 {
-    public record ForgetPasswordAuthCommandRequest(string Email) : IRequest<Result<string>>;
-    public sealed class ForgetPasswordAuthCommandHandler(UserManager<User> _userManager, IEmailService _emailService) : IRequestHandler<ForgetPasswordAuthCommandRequest, Result<string>>
+    public record ForgetPasswordUserCommandRequest(string Email) : IRequest<Result<string>>;
+    public sealed class ForgetPasswordUserCommandHandler(UserManager<User> _userManager, IEmailService _emailService) : IRequestHandler<ForgetPasswordUserCommandRequest, Result<string>>
     {
-        public async ValueTask<Result<string>> Handle(ForgetPasswordAuthCommandRequest request, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> Handle(ForgetPasswordUserCommandRequest request, CancellationToken cancellationToken)
         {
             User? hasUser = await _userManager.FindByEmailAsync(request.Email);
 

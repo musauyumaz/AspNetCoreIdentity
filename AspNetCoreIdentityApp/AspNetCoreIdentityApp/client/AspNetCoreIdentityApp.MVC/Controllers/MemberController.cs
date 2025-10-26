@@ -20,7 +20,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         {
             if (!ModelState.IsValid) return View();
 
-            ApiResult<string> result = await _httpClientService.PostAsync<PasswordChangeRequestDTO, ApiResult<string>>(new(Controller: "Members", Action: "ChangePassword"), new PasswordChangeRequestDTO(User.Identity?.Name ?? string.Empty, passwordChangeRequestDTO.OldPassword, passwordChangeRequestDTO.NewPassword));
+            ApiResult<string> result = await _httpClientService.PostAsync<PasswordChangeRequestDTO, ApiResult<string>>(new(Controller: "Users", Action: "ChangePassword"), new PasswordChangeRequestDTO(User.Identity?.Name ?? string.Empty, passwordChangeRequestDTO.OldPassword, passwordChangeRequestDTO.NewPassword));
 
             if (!result.IsSucceed)
             {

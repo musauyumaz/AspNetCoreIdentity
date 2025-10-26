@@ -83,7 +83,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordRequestDTO forgetPasswordRequestDTO)
         {
-            var data = await _httpClientService.PostAsync<ForgetPasswordRequestDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ForgetPassword"), forgetPasswordRequestDTO);
+            var data = await _httpClientService.PostAsync<ForgetPasswordRequestDTO, ApiResult<string>>(new(Controller: "Users", Action: "ForgetPassword"), forgetPasswordRequestDTO);
 
             if (!data.IsSucceed)
             {
@@ -109,7 +109,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             string? userId = TempData["userId"]?.ToString();
             string? token = TempData["token"]?.ToString();
 
-            var result =  await _httpClientService.PostAsync<ResetPasswordRequestDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ResetPassword"),new(userId,token, request.Password));
+            var result =  await _httpClientService.PostAsync<ResetPasswordRequestDTO, ApiResult<string>>(new(Controller: "Users", Action: "ResetPassword"),new(userId,token, request.Password));
 
             if (!result.IsSucceed)
                 ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");

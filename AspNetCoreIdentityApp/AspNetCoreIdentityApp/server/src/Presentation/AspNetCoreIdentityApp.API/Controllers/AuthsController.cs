@@ -1,10 +1,7 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
-using AspNetCoreIdentityApp.Application.Features.Auths.Commands.ForgetPassword;
-using AspNetCoreIdentityApp.Application.Features.Auths.Commands.ResetPassword;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignUp;
-using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
-using AspNetCoreIdentityApp.Application.Features.Auths.Queries.GetAll;
+using AspNetCoreIdentityApp.Application.Features.Users.DTOs;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,26 +21,6 @@ namespace AspNetCoreIdentityApp.API.Controllers
         public async Task<IActionResult> SignUp([FromBody] SignUpAuthCommandRequest signUpCommandRequest)
         {
             Result<UserDTO> data = await _mediator.Send(signUpCommandRequest);
-            return StatusCode((int)data.StatusCode, data);
-        }
-
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllUsersQueryRequest getAllUsersQueryRequest)
-        {
-            Result<List<UserDTO>> data = await _mediator.Send(getAllUsersQueryRequest);
-            return StatusCode((int)data.StatusCode, data);
-        }
-
-        [HttpPost("ForgetPassword")]
-        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordAuthCommandRequest forgetPasswordAuthCommandRequest)
-        {
-            Result<string> data = await _mediator.Send(forgetPasswordAuthCommandRequest);
-            return StatusCode((int)data.StatusCode, data);
-        }
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordAuthCommandRequest resetPasswordAuthCommandRequest)
-        {
-            Result<string> data = await _mediator.Send(resetPasswordAuthCommandRequest);
             return StatusCode((int)data.StatusCode, data);
         }
     }

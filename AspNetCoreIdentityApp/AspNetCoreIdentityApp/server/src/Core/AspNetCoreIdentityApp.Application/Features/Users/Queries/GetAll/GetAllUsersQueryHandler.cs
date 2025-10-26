@@ -1,11 +1,11 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
-using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
+using AspNetCoreIdentityApp.Application.Features.Users.DTOs;
 using AspNetCoreIdentityApp.Domain.Entities;
 using Mapster;
 using Mediator;
 using Microsoft.AspNetCore.Identity;
 
-namespace AspNetCoreIdentityApp.Application.Features.Auths.Queries.GetAll
+namespace AspNetCoreIdentityApp.Application.Features.Users.Queries.GetAll
 {
     public sealed record GetAllUsersQueryRequest() : IRequest<Result<List<UserDTO>>>;
     public sealed class GetAllUsersQueryHandler(UserManager<User> _userManager) : IRequestHandler<GetAllUsersQueryRequest, Result<List<UserDTO>>>

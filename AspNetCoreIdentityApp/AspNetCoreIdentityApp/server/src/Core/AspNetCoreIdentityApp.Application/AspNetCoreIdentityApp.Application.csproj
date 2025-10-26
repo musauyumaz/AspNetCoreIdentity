@@ -20,4 +20,8 @@
     <ProjectReference Include="..\AspNetCoreIdentityApp.Domain\AspNetCoreIdentityApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Auths\Queries\" />
+  </ItemGroup>
+
 </Project>
