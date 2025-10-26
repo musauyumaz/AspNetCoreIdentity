@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\client\AspNetCoreIdentityApp.MVC\AspNetCoreIdentityApp.MVC.csproj" />
     <ProjectReference Include="..\AspNetCoreIdentityApp.Domain\AspNetCoreIdentityApp.Domain.csproj" />
   </ItemGroup>
 

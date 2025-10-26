@@ -1,5 +1,4 @@
-﻿using AspNetCoreIdentityApp.Application.Abstractions.Services;
-using AspNetCoreIdentityApp.Application.Commons.Results;
+﻿using AspNetCoreIdentityApp.Application.Commons.Results;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.ForgetPassword;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.ResetPassword;
 using AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn;
@@ -8,13 +7,12 @@ using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
 using AspNetCoreIdentityApp.Application.Features.Auths.Queries.GetAll;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AspNetCoreIdentityApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthsController(IMediator _mediator, IEmailService _emailService) : ControllerBase
+    public class AuthsController(IMediator _mediator) : ControllerBase
     {
         [HttpPost("Login")]
         public async Task<IActionResult> SignIn([FromBody] SignInAuthCommandRequest signInAuthCommandRequest)
