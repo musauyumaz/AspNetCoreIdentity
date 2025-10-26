@@ -1,4 +1,5 @@
-﻿using AspNetCoreIdentityApp.MVC.Models;
+﻿using AspNetCoreIdentityApp.MVC.Models.DTOs;
+using AspNetCoreIdentityApp.MVC.Models.ViewModels;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -10,21 +11,12 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 {
     public class HomeController(IHttpClientService _httpClientService) : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-        public async Task<IActionResult> SignUp()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();
+        public IActionResult SignUp() => View();
         [HttpPost]
-        public async Task<IActionResult> SignUp(SignUpViewModel signUpViewModel)
+        public async Task<IActionResult> SignUp(SignUpRequestDTO signUpRequestDTO)
         {
 
             if (!ModelState.IsValid)
@@ -32,7 +24,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
                 return View();
             }
 
-            ApiResult<object> data = await _httpClientService.PostAsync<SignUpViewModel, ApiResult<object>>(new(Controller: "Auths"), signUpViewModel);
+            ApiResult<object> data = await _httpClientService.PostAsync<SignUpRequestDTO, ApiResult<object>>(new(Controller: "Auths"), signUpRequestDTO);
 
             if (data.IsSucceed)
             {
@@ -47,26 +39,24 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SignIn()
-        {
-            return View();
-        }
+        public IActionResult SignIn() => View();
 
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInViewModel signInViewModel, string? returnUrl = null)
+        public async Task<IActionResult> SignIn(SignInRequestDTO signInRequestDTO, string? returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Action("Index", "Home");
+            _ = returnUrl ?? Url.Action("Index", "Home");
 
-            ApiResult<UserDTO> data = await _httpClientService.PostAsync<SignInViewModel, ApiResult<UserDTO>>(new(Controller: "Auths", Action: "login"), signInViewModel);
+            ApiResult<UserResponseDTO> data = await _httpClientService.PostAsync<SignInRequestDTO, ApiResult<UserResponseDTO>>(new(Controller: "Auths", Action: "login"), signInRequestDTO);
 
             if (data.IsSucceed)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, data.Data.Id ?? string.Empty),
-                    new Claim(ClaimTypes.Name, data.Data.UserName ?? string.Empty),
-                    new Claim(ClaimTypes.Email, data.Data.Email ?? string.Empty)
+                    new(ClaimTypes.NameIdentifier, data.Data?.Id ?? string.Empty),
+                    new(ClaimTypes.Name, data.Data?.UserName ?? string.Empty),
+                    new(ClaimTypes.Email, data.Data?.Email ?? string.Empty),
+                    new(ClaimTypes.MobilePhone, data.Data?.PhoneNumber ?? string.Empty)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -74,7 +64,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
                 var authProperties = new AuthenticationProperties
                 {
-                    IsPersistent = signInViewModel.RememberMe,
+                    IsPersistent = signInRequestDTO.RememberMe,
                     ExpiresUtc = DateTimeOffset.UtcNow.AddDays(60)
                 };
 
@@ -89,14 +79,11 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ForgetPassword()
-        {
-            return View();
-        }
+        public IActionResult ForgetPassword() => View();
         [HttpPost]
-        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel resetPasswordViewModel)
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordRequestDTO forgetPasswordRequestDTO)
         {
-            var data = await _httpClientService.PostAsync<ForgetPasswordViewModel, ApiResult<string>>(new(Controller: "Auths", Action: "ForgetPassword"), resetPasswordViewModel);
+            var data = await _httpClientService.PostAsync<ForgetPasswordRequestDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ForgetPassword"), forgetPasswordRequestDTO);
 
             if (!data.IsSucceed)
             {
@@ -109,7 +96,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ResetPassword(string userId, string token)
+        public IActionResult ResetPassword(string userId, string token)
         {
             TempData["userId"] = userId;
             TempData["token"] = token;
@@ -119,10 +106,10 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
         {
-            string? userId = TempData["userId"].ToString();
-            string? token = TempData["token"].ToString();
+            string? userId = TempData["userId"]?.ToString();
+            string? token = TempData["token"]?.ToString();
 
-            var result =  await _httpClientService.PostAsync<ResetPasswordDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ResetPassword"),new(userId,token, request.Password));
+            var result =  await _httpClientService.PostAsync<ResetPasswordRequestDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ResetPassword"),new(userId,token, request.Password));
 
             if (!result.IsSucceed)
                 ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");
@@ -133,5 +120,4 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         }
     }
 
-    public record ResetPasswordDTO(string UserId, string Token, string Password);
 }

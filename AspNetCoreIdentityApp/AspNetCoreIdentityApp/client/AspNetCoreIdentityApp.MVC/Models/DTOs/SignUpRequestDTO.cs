@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models
+namespace AspNetCoreIdentityApp.MVC.Models.DTOs
 {
-    public record SignUpViewModel
+    public record SignUpRequestDTO
     {
         [Required(ErrorMessage ="Kullanıcı Ad alanı boş bırakılamaz")]
         [Display(Name = "Kullanıcı Adı :")]

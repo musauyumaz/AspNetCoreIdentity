@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models
+namespace AspNetCoreIdentityApp.MVC.Models.ViewModels
 {
     public record ResetPasswordViewModel
     {

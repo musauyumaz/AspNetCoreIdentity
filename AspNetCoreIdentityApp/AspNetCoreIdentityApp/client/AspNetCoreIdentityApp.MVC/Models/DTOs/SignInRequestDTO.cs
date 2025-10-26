@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models
+namespace AspNetCoreIdentityApp.MVC.Models.DTOs
 {
-    public record SignInViewModel
+    public record SignInRequestDTO
     {
         [Required(ErrorMessage = "Kullanıcı Ad Email alanı boş bırakılamaz")]
         [Display(Name = "Kullanıcı Ad veya Email")]

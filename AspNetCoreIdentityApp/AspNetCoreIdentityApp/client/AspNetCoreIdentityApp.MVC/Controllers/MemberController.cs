@@ -8,14 +8,8 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
     [Authorize]
     public class MemberController : Controller
     {
-        public async Task SignOut()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        }
+        public async Task SignOut() => await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        public async Task<IActionResult> Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
     }
 }

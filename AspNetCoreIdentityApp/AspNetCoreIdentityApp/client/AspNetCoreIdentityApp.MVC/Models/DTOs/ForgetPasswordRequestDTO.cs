@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models
+namespace AspNetCoreIdentityApp.MVC.Models.DTOs
 {
-    public record ForgetPasswordViewModel
+    public record ForgetPasswordRequestDTO
     {
         [Required(ErrorMessage = "Email alanı boş bırakılamaz")]
         [EmailAddress(ErrorMessage = "Geçersiz Email Adresi")]
