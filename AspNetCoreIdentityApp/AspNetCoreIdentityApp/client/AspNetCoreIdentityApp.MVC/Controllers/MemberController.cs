@@ -16,6 +16,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
         public IActionResult Index() => View();
         public IActionResult PasswordChange() => View();
+        [HttpPost]
         public async Task<IActionResult> PasswordChange(PasswordChangeViewModel passwordChangeRequestDTO) 
         {
             if (!ModelState.IsValid) return View();

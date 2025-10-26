@@ -1,4 +1,5 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
+using AspNetCoreIdentityApp.Application.Features.Users.Commands.ChangePassword;
 using AspNetCoreIdentityApp.Application.Features.Users.Commands.ForgetPassword;
 using AspNetCoreIdentityApp.Application.Features.Users.Commands.ResetPassword;
 using AspNetCoreIdentityApp.Application.Features.Users.DTOs;
@@ -29,6 +30,13 @@ namespace AspNetCoreIdentityApp.API.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] UserResetPasswordCommandRequest resetPasswordAuthCommandRequest)
         {
             Result<string> data = await _mediator.Send(resetPasswordAuthCommandRequest);
+            return StatusCode((int)data.StatusCode, data);
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] UserChangePasswordCommandRequest userChangePasswordCommandRequest)
+        {
+            Result<string> data = await _mediator.Send(userChangePasswordCommandRequest);
             return StatusCode((int)data.StatusCode, data);
         }
     }
