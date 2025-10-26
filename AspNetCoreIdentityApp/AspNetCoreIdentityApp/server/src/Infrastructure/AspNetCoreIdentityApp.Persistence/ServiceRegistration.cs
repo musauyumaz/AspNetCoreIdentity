@@ -38,5 +38,10 @@ public static class ServiceRegistration
         {
             options.TokenLifespan = TimeSpan.FromMinutes(3);
         });
+
+        services.Configure<SecurityStampValidatorOptions>(options =>
+        {
+            options.ValidationInterval = TimeSpan.FromMinutes(60);
+        });
     }
 }

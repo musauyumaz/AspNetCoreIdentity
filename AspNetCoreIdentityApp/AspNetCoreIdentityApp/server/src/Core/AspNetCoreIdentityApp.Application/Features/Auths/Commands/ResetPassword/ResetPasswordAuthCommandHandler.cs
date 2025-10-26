@@ -17,6 +17,7 @@ namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.ResetPasswor
                 return Result<string>.Fail("Kullanıcı bulunamadı");
 
             var result = await _userManager.ResetPasswordAsync(hasUser, request.Token, request.Password);
+            await _userManager.UpdateSecurityStampAsync(hasUser);
 
             return result.Succeeded
                 ? Result<string>.Success("Şifre sıfırlama işlemi başarılı.")
