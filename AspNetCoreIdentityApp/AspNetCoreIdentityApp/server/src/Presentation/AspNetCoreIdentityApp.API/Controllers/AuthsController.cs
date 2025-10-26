@@ -12,13 +12,13 @@ namespace AspNetCoreIdentityApp.API.Controllers
     public class AuthsController(IMediator _mediator) : ControllerBase
     {
         [HttpPost("Login")]
-        public async Task<IActionResult> SignIn([FromBody] SignInAuthCommandRequest signInAuthCommandRequest)
+        public async Task<IActionResult> SignIn([FromBody] AuthSignInCommandRequest signInAuthCommandRequest)
         {
             Result<UserDTO> data = await _mediator.Send(signInAuthCommandRequest);
             return StatusCode((int)data.StatusCode, data);
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody] SignUpAuthCommandRequest signUpCommandRequest)
+        public async Task<IActionResult> SignUp([FromBody] AuthSignUpCommandRequest signUpCommandRequest)
         {
             Result<UserDTO> data = await _mediator.Send(signUpCommandRequest);
             return StatusCode((int)data.StatusCode, data);

@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreIdentityApp.Application.Features.Users.Commands.ResetPassword
 {
-    public record ResetPasswordUserCommandRequest(string UserId, string Token, string Password) : IRequest<Result<string>>;
-    public sealed class ResetPasswordUserCommandHandler(UserManager<User> _userManager) : IRequestHandler<ResetPasswordUserCommandRequest, Result<string>>
+    public record UserResetPasswordCommandRequest(string UserId, string Token, string Password) : IRequest<Result<string>>;
+    public sealed class UserResetPasswordCommandHandler(UserManager<User> _userManager) : IRequestHandler<UserResetPasswordCommandRequest, Result<string>>
     {
-        public async ValueTask<Result<string>> Handle(ResetPasswordUserCommandRequest request, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> Handle(UserResetPasswordCommandRequest request, CancellationToken cancellationToken)
         {
             User? hasUser = await _userManager.FindByIdAsync(request.UserId);
 

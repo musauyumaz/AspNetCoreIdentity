@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignUp
 {
-    public readonly record struct SignUpAuthCommandRequest(string UserName, string Email, string PhoneNumber, string Password, string PasswordConfirm) : IRequest<Result<UserDTO>>;
-    public sealed class SignUpAuthCommandHandler(UserManager<User> _userManager) : IRequestHandler<SignUpAuthCommandRequest, Result<UserDTO>>
+    public readonly record struct AuthSignUpCommandRequest(string UserName, string Email, string PhoneNumber, string Password, string PasswordConfirm) : IRequest<Result<UserDTO>>;
+    public sealed class AuthSignUpCommandHandler(UserManager<User> _userManager) : IRequestHandler<AuthSignUpCommandRequest, Result<UserDTO>>
     {
-        public async ValueTask<Result<UserDTO>> Handle(SignUpAuthCommandRequest request, CancellationToken cancellationToken)
+        public async ValueTask<Result<UserDTO>> Handle(AuthSignUpCommandRequest request, CancellationToken cancellationToken)
         {
             var data = await _userManager.CreateAsync(request.Adapt<User>(),request.PasswordConfirm);
             return data.Succeeded

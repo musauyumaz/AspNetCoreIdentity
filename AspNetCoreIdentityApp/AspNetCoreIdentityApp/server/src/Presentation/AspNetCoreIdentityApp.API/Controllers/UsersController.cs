@@ -13,20 +13,20 @@ namespace AspNetCoreIdentityApp.API.Controllers
     public class UsersController(IMediator _mediator) : ControllerBase
     {
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllUsersQueryRequest getAllUsersQueryRequest)
+        public async Task<IActionResult> GetAll([FromQuery] UserGetAllQueryRequest getAllUsersQueryRequest)
         {
             Result<List<UserDTO>> data = await _mediator.Send(getAllUsersQueryRequest);
             return StatusCode((int)data.StatusCode, data);
         }
 
         [HttpPost("ForgetPassword")]
-        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordUserCommandRequest forgetPasswordAuthCommandRequest)
+        public async Task<IActionResult> ForgetPassword([FromBody] UserForgetPasswordUserCommandRequest forgetPasswordAuthCommandRequest)
         {
             Result<string> data = await _mediator.Send(forgetPasswordAuthCommandRequest);
             return StatusCode((int)data.StatusCode, data);
         }
         [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordUserCommandRequest resetPasswordAuthCommandRequest)
+        public async Task<IActionResult> ResetPassword([FromBody] UserResetPasswordCommandRequest resetPasswordAuthCommandRequest)
         {
             Result<string> data = await _mediator.Send(resetPasswordAuthCommandRequest);
             return StatusCode((int)data.StatusCode, data);

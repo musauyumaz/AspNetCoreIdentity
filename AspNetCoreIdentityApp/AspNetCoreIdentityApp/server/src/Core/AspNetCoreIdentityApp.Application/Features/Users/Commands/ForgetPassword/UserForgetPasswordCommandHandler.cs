@@ -7,10 +7,10 @@ using System.Net;
 
 namespace AspNetCoreIdentityApp.Application.Features.Users.Commands.ForgetPassword
 {
-    public record ForgetPasswordUserCommandRequest(string Email) : IRequest<Result<string>>;
-    public sealed class ForgetPasswordUserCommandHandler(UserManager<User> _userManager, IEmailService _emailService) : IRequestHandler<ForgetPasswordUserCommandRequest, Result<string>>
+    public record UserForgetPasswordUserCommandRequest(string Email) : IRequest<Result<string>>;
+    public sealed class UserForgetPasswordCommandHandler(UserManager<User> _userManager, IEmailService _emailService) : IRequestHandler<UserForgetPasswordUserCommandRequest, Result<string>>
     {
-        public async ValueTask<Result<string>> Handle(ForgetPasswordUserCommandRequest request, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> Handle(UserForgetPasswordUserCommandRequest request, CancellationToken cancellationToken)
         {
             User? hasUser = await _userManager.FindByEmailAsync(request.Email);
 
