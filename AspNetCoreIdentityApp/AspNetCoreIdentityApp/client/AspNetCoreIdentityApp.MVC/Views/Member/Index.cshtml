@@ -1,7 +1,29 @@
-﻿
+﻿@using System.Security.Claims
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Hoşgeldin @User.Identity.Name</h1>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1>Kullanıcı Bilgileri</h1>
+        <table class="table table-striped-columns table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Kullanıcı Adı</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@User.FindFirst(ClaimTypes.Name)?.Value</td>
+                    <td>@User.FindFirst(ClaimTypes.Email)?.Value</td>
+                    <td>@User.FindFirst(ClaimTypes.MobilePhone)?.Value</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
