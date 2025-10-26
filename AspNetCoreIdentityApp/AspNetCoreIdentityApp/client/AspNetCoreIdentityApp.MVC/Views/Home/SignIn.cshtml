@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "SignIn";
 }
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <h2>Kullanıcı Giriş</h2>
@@ -17,10 +20,19 @@
                 <label asp-for="Password" class="form-label"></label>
                 <input type="password" class="form-control" asp-for="Password">
             </div>
-            <div class="mb-3 form-check">
-                <input class="form-check-input" asp-for="RememberMe">
-                <label class="form-check-label" asp-for="RememberMe"></label>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input" asp-for="RememberMe">
+                        <label class="form-check-label" asp-for="RememberMe"></label>
+                    </div>
+                </div>
+                <div class="col-md-6 me-0">
+                    <a class="btn btn-outline-secondary btn-sm float-end" asp-controller="Home" asp-action="ForgetPassword">Şifremi Unuttum</a>
+                </div>
             </div>
+
             <button type="submit" class="btn btn-primary">Giriş Yap</button>
         </form>
 

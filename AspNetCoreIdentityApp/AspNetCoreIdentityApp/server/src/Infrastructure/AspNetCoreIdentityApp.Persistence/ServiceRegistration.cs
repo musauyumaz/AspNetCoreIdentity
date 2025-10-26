@@ -2,6 +2,7 @@
 using AspNetCoreIdentityApp.Persistence.Contexts;
 using AspNetCoreIdentityApp.Persistence.Identity.Localizations;
 using AspNetCoreIdentityApp.Persistence.Identity.Validations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,17 @@ public static class ServiceRegistration
         }).AddUserValidator<UserValidator>()
         .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
         .AddPasswordValidator<PasswordValidator>()
+        .AddDefaultTokenProviders()
         .AddEntityFrameworkStores<AppDbContext>();
+
+        services.Configure<DataProtectionTokenProviderOptions>(options =>
+        {
+            options.TokenLifespan = TimeSpan.FromMinutes(3);
+        });
+
+        services.Configure<SecurityStampValidatorOptions>(options =>
+        {
+            options.ValidationInterval = TimeSpan.FromMinutes(60);
+        });
     }
 }

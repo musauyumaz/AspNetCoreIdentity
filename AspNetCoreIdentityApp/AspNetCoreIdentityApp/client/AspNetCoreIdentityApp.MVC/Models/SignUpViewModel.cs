@@ -19,11 +19,13 @@ namespace AspNetCoreIdentityApp.MVC.Models
 
         [Required(ErrorMessage ="Şifre alanı boş bırakılamaz")]
         [Display(Name = "Şifre :")]
+        [DataType(DataType.Password)]
         public string Password { get; init; }
 
         [Compare(nameof(Password), ErrorMessage ="Şifreler Uyuşmuyor")]
         [Required(ErrorMessage ="Şifre Tekrar alanı boş bırakılamaz")]
         [Display(Name = "Şifre Tekrar :")]
+        [DataType(DataType.Password)]
         public string PasswordConfirm { get; init; }
     }
 }

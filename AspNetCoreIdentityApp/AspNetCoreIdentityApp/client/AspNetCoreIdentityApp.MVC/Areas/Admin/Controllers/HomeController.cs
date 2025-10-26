@@ -2,7 +2,6 @@
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
 {

@@ -5,4 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\AspNetCoreIdentityApp.Application\AspNetCoreIdentityApp.Application.csproj" />
+  </ItemGroup>
 </Project>

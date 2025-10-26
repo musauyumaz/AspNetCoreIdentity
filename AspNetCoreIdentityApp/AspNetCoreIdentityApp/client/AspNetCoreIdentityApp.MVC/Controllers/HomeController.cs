@@ -88,5 +88,50 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel resetPasswordViewModel)
+        {
+            var data = await _httpClientService.PostAsync<ForgetPasswordViewModel, ApiResult<string>>(new(Controller: "Auths", Action: "ForgetPassword"), resetPasswordViewModel);
+
+            if (!data.IsSucceed)
+            {
+                ModelState.AddModelError(string.Empty, data.ErrorMessage ?? "");
+                return View();
+            }
+
+            TempData["SuccessMessage"] = "Şifre sıfırlama linki email adresinize gönderilmiştir.";
+            return RedirectToAction(nameof(ForgetPassword));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(string userId, string token)
+        {
+            TempData["userId"] = userId;
+            TempData["token"] = token;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
+        {
+            string? userId = TempData["userId"].ToString();
+            string? token = TempData["token"].ToString();
+
+            var result =  await _httpClientService.PostAsync<ResetPasswordDTO, ApiResult<string>>(new(Controller: "Auths", Action: "ResetPassword"),new(userId,token, request.Password));
+
+            if (!result.IsSucceed)
+                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");
+
+            TempData["SuccessMessage"] = result.Data;
+
+            return View();
+        }
     }
+
+    public record ResetPasswordDTO(string UserId, string Token, string Password);
 }
