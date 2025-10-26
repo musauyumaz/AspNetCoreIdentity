@@ -5,6 +5,7 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">@User.Identity.Name</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" asp-controller="Member" asp-action="Index">Profile</a></li>
+                <li><a class="dropdown-item" asp-controller="Member" asp-action="PasswordChange">Şifreyi Değiştir</a></li>
                 <li><a class="dropdown-item" asp-route-returnurl="/Home/Index" asp-controller="Member" asp-action="SignOut">Çıkış Yap</a></li>
             </ul>
         </li>

@@ -11,6 +11,7 @@ namespace AspNetCoreIdentityApp.MVC.Models.DTOs
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre alanı boş bırakılamaz")]
         [Display(Name = "Şifre")]
+        [MinLength(6, ErrorMessage = "Eski Şifre en az 6 karakter olmalıdır")]
         public string Password { get; init; }
 
         [Display(Name = "Beni Hatırla")]
