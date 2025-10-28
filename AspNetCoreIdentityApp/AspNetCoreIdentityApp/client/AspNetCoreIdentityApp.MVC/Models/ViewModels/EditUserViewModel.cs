@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models.DTOs
+namespace AspNetCoreIdentityApp.MVC.Models.ViewModels
 {
-    public record EditUserRequestDTO
+    public record EditUserViewModel
     {
         [Required(ErrorMessage ="Kullanıcı Ad alanı boş bırakılamaz")]
         [Display(Name = "Kullanıcı Adı :")]
@@ -17,6 +17,7 @@ namespace AspNetCoreIdentityApp.MVC.Models.DTOs
         [Display(Name = "Telefon :")]
         public string PhoneNumber { get; init; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Doğum Tarihi :")]
         public DateTime? BirthDate { get; init; }
 
