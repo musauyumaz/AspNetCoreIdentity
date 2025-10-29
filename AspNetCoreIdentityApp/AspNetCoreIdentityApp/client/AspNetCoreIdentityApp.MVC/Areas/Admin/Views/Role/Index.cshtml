@@ -6,6 +6,12 @@
 
 
 <div class="row">
+    @if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert alert-info" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
     <div class="col-md-6 offset-md-2">
         <h2>Roller</h2>
     </div>
@@ -21,6 +27,7 @@
                     <th>ID</th>
                     <th>Role Adı</th>
                     <th>Güncelle</th>
+                    <th>Sil</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +37,7 @@
                         <td>@role.Id</td>
                         <td>@role.Name</td>
                         <td><a class="btn btn-sm btn-warning" asp-area="Admin" asp-controller="Role" asp-action="Update" asp-route-id="@role.Id">Güncelle</a></td>
+                        <td><a class="btn btn-sm btn-danger my-1" asp-area="Admin" asp-controller="Role" asp-action="Delete" asp-route-id="@role.Id">Sil</a></td>
                     </tr>
                 }
         </table>

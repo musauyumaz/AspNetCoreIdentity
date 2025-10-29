@@ -18,7 +18,7 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
 
         public IActionResult Add() => View();
         [HttpPost]
-        public async Task<IActionResult> Add(AddRoleDTO addRoleDTO) 
+        public async Task<IActionResult> Add(AddRoleDTO addRoleDTO)
         {
             ApiResult<string>? result = await _httpClientService.PostAsync<AddRoleDTO, ApiResult<string>>(new(Controller: "Roles", Action: "Add"), addRoleDTO);
 
@@ -27,15 +27,15 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");
                 return View();
             }
-            
+
 
             TempData["SuccessMessage"] = "Rol ekleme işlemi başarılı.";
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> UpdateAsync(string id) 
+        public async Task<IActionResult> UpdateAsync(string id)
         {
-            ApiResult<UpdateRoleDTO>? result = await _httpClientService.GetAsync<ApiResult<UpdateRoleDTO>>(new(Controller: "Roles", Action: "Get"),id);
+            ApiResult<UpdateRoleDTO>? result = await _httpClientService.GetAsync<ApiResult<UpdateRoleDTO>>(new(Controller: "Roles", Action: "Get"), id);
             return View(result.Data);
         }
 
@@ -52,6 +52,18 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
 
 
             TempData["SuccessMessage"] = "Rol güncelleme işlemi başarılı.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            ApiResult<string>? result = await _httpClientService.DeleteAsync<ApiResult<string>>(new(Controller: "Roles", Action: "Delete"), id);
+            if (!result.IsSucceed)
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["SuccessMessage"] = "Rol silme işlemi başarılı.";
             return RedirectToAction(nameof(Index));
         }
     }
