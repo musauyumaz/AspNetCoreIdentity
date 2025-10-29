@@ -20,6 +20,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Role Adı</th>
+                    <th>Güncelle</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                     <tr>
                         <td>@role.Id</td>
                         <td>@role.Name</td>
+                        <td><a class="btn btn-sm btn-warning" asp-area="Admin" asp-controller="Role" asp-action="Update" asp-route-id="@role.Id">Güncelle</a></td>
                     </tr>
                 }
         </table>

@@ -12,7 +12,7 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            var data = await _httpClientService.GetAsync<ApiResult<List<RoleViewModel>>>(new(Controller: "Roles", Action: "GetAll"));
+            ApiResult<List<RoleViewModel>>? data = await _httpClientService.GetAsync<ApiResult<List<RoleViewModel>>>(new(Controller: "Roles", Action: "GetAll"));
             return View(data.Data);
         }
 
@@ -20,7 +20,7 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddRoleDTO addRoleDTO) 
         {
-            var result = await _httpClientService.PostAsync<AddRoleDTO, ApiResult<string>>(new(Controller: "Roles", Action: "Add"), addRoleDTO);
+            ApiResult<string>? result = await _httpClientService.PostAsync<AddRoleDTO, ApiResult<string>>(new(Controller: "Roles", Action: "Add"), addRoleDTO);
 
             if (!result.IsSucceed)
             {
@@ -30,6 +30,28 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
             
 
             TempData["SuccessMessage"] = "Rol ekleme işlemi başarılı.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> UpdateAsync(string id) 
+        {
+            ApiResult<UpdateRoleDTO>? result = await _httpClientService.GetAsync<ApiResult<UpdateRoleDTO>>(new(Controller: "Roles", Action: "Get"),id);
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateRoleDTO updateRoleDTO)
+        {
+            ApiResult<string>? result = await _httpClientService.PutAsync<UpdateRoleDTO, ApiResult<string>>(new(Controller: "Roles", Action: "Update"), updateRoleDTO);
+
+            if (!result.IsSucceed)
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "");
+                return View();
+            }
+
+
+            TempData["SuccessMessage"] = "Rol güncelleme işlemi başarılı.";
             return RedirectToAction(nameof(Index));
         }
     }
