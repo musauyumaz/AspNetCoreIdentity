@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Models
+﻿namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Models.ViewModels
 {
     public record UserViewModel
     {

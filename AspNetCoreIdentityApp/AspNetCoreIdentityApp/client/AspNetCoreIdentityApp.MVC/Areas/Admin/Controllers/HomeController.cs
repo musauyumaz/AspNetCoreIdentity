@@ -1,4 +1,4 @@
-﻿using AspNetCoreIdentityApp.MVC.Areas.Admin.Models;
+﻿using AspNetCoreIdentityApp.MVC.Areas.Admin.Models.ViewModels;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
 using Microsoft.AspNetCore.Mvc;
