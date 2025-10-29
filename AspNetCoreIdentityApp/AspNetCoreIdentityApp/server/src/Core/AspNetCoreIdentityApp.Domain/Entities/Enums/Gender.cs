@@ -2,7 +2,7 @@
 {
     public enum Gender : byte
     {
-        Erkek = 1,
-        Kadın = 2
+        Kadın = 1,
+        Erkek = 2
     }
 }

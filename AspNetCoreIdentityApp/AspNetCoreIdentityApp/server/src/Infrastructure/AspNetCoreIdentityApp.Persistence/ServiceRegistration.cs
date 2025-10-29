@@ -13,7 +13,11 @@ public static class ServiceRegistration
 {
     public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SQLConnection")));
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseSqlServer(configuration.GetConnectionString("SQLConnection"));
+            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
         services.AddIdentity<User, Role>(options =>
         {
             options.User.RequireUniqueEmail = true;
