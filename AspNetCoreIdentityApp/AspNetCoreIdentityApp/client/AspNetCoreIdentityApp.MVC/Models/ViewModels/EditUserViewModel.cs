@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models
+namespace AspNetCoreIdentityApp.MVC.Models.ViewModels
 {
-    public record SignUpViewModel
+    public record EditUserViewModel
     {
         [Required(ErrorMessage ="Kullanıcı Ad alanı boş bırakılamaz")]
         [Display(Name = "Kullanıcı Adı :")]
@@ -17,15 +17,18 @@ namespace AspNetCoreIdentityApp.MVC.Models
         [Display(Name = "Telefon :")]
         public string PhoneNumber { get; init; }
 
-        [Required(ErrorMessage ="Şifre alanı boş bırakılamaz")]
-        [Display(Name = "Şifre :")]
-        [DataType(DataType.Password)]
-        public string Password { get; init; }
+        [DataType(DataType.Date)]
+        [Display(Name = "Doğum Tarihi :")]
+        public DateTime? BirthDate { get; init; }
 
-        [Compare(nameof(Password), ErrorMessage ="Şifreler Uyuşmuyor")]
-        [Required(ErrorMessage ="Şifre Tekrar alanı boş bırakılamaz")]
-        [Display(Name = "Şifre Tekrar :")]
-        [DataType(DataType.Password)]
-        public string PasswordConfirm { get; init; }
+        [Display(Name = "Şehir :")]
+        public string? City { get; init; }
+
+        [Display(Name = "Profil Resmi :")]
+        public IFormFile? Picture { get; init; }
+
+        [Display(Name = "Cinsiyet :")]
+        public byte? Gender { get; init; }
+
     }
 }

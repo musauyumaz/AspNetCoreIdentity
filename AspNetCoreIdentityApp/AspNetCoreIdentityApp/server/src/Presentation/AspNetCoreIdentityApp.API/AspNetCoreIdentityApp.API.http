@@ -29,7 +29,4 @@ Content-Type: application/json
 
 ###
 
-GET {{AspNetCoreIdentityApp.API_HostAddress}}/auths/SendTestEmail
-Accept: application/json
-Content-Type: application/json
-
+GET {{AspNetCoreIdentityApp.API_HostAddress}}/Users/FindById/ed180549-fd4d-4ea5-bb1a-c7dbf5fa25a8

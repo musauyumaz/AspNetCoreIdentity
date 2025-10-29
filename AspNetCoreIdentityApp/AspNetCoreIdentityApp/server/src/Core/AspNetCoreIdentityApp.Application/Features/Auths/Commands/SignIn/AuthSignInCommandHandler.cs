@@ -1,5 +1,5 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
-using AspNetCoreIdentityApp.Application.Features.Auths.DTOs;
+using AspNetCoreIdentityApp.Application.Features.Users.DTOs;
 using AspNetCoreIdentityApp.Domain.Entities;
 using Mapster;
 using Mediator;
@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignIn
 {
-    public readonly record struct SignInAuthCommandRequest(string UserNameOrEmail,string Password, bool RememberMe) : IRequest<Result<UserDTO>>;
+    public readonly record struct AuthSignInCommandRequest(string UserNameOrEmail,string Password, bool RememberMe) : IRequest<Result<UserDTO>>;
 
-    public sealed class SignInAuthCommandHandler(SignInManager<User> _signInManager) : IRequestHandler<SignInAuthCommandRequest, Result<UserDTO>>
+    public sealed class AuthSignInCommandHandler(SignInManager<User> _signInManager) : IRequestHandler<AuthSignInCommandRequest, Result<UserDTO>>
     {
-        public async ValueTask<Result<UserDTO>> Handle(SignInAuthCommandRequest request, CancellationToken cancellationToken)
+        public async ValueTask<Result<UserDTO>> Handle(AuthSignInCommandRequest request, CancellationToken cancellationToken)
         {
             User? hasUser = await _signInManager.UserManager.FindByNameAsync(request.UserNameOrEmail) ?? await _signInManager.UserManager.FindByEmailAsync(request.UserNameOrEmail);
 

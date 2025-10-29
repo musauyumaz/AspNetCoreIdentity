@@ -1,0 +1,8 @@
+﻿namespace AspNetCoreIdentityApp.Domain.Entities.Enums
+{
+    public enum Gender : byte
+    {
+        Kadın = 1,
+        Erkek = 2
+    }
+}

@@ -15,7 +15,7 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> UserList()
         {
-            ApiResult<List<UserViewModel>> datas = await _httpClientService.GetAsync<ApiResult<List<UserViewModel>>>(new(Controller: "Auths", Action: "GetAll"));
+            ApiResult<List<UserViewModel>> datas = await _httpClientService.GetAsync<ApiResult<List<UserViewModel>>>(new(Controller: "Users", Action: "GetAll"));
             return View(datas.Data);
         }
     }

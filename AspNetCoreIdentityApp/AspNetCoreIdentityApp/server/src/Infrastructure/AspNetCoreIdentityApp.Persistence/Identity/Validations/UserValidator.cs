@@ -9,7 +9,7 @@ namespace AspNetCoreIdentityApp.Persistence.Identity.Validations
         {
             var errors = new List<IdentityError>();
 
-            if(int.TryParse(user.UserName[0].ToString(), out int number))
+            if(int.TryParse(user.UserName?[0].ToString(), out int number))
             {
                 errors.Add(new() { Code = "UserNameStartsWithNumber", Description = $"Kullanıcı adı rakam ile başlayamaz : {number}" });
             }

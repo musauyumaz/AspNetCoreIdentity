@@ -48,7 +48,7 @@ namespace AspNetCoreIdentityApp.MVC.Services.Concretes
             StringBuilder urlBuilder = new StringBuilder();
             urlBuilder.Append(!String.IsNullOrEmpty(requestParameter.BaseUrl) ? requestParameter.BaseUrl : _configuration["ApiSettings:BaseUrl"]);
             urlBuilder.Append(requestParameter.Controller + "/");
-            urlBuilder.Append(!String.IsNullOrEmpty(requestParameter.Action) ? requestParameter.Action : "");
+            urlBuilder.Append(!String.IsNullOrEmpty(requestParameter.Action) ? requestParameter.Action + "/" : "");
             urlBuilder.Append((!String.IsNullOrEmpty(requestParameter.QueryString) ? "?" + requestParameter.QueryString : ""));
             return !String.IsNullOrEmpty(requestParameter.FullEndpoint) ? requestParameter.FullEndpoint : urlBuilder.ToString();
         }

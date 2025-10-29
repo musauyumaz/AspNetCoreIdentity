@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreIdentityApp.MVC.Models
+namespace AspNetCoreIdentityApp.MVC.Models.DTOs
 {
-    public record SignInViewModel
+    public record SignInRequestDTO
     {
         [Required(ErrorMessage = "Kullanıcı Ad Email alanı boş bırakılamaz")]
         [Display(Name = "Kullanıcı Ad veya Email")]
@@ -11,6 +11,7 @@ namespace AspNetCoreIdentityApp.MVC.Models
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre alanı boş bırakılamaz")]
         [Display(Name = "Şifre")]
+        [MinLength(6, ErrorMessage = "Eski Şifre en az 6 karakter olmalıdır")]
         public string Password { get; init; }
 
         [Display(Name = "Beni Hatırla")]

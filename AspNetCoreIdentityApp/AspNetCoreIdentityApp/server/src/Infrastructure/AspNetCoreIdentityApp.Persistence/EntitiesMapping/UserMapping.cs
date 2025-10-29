@@ -10,6 +10,8 @@ namespace AspNetCoreIdentityApp.Persistence.EntitiesMapping
         {
             builder.HasIndex(u => u.Email).IsUnique();
             builder.HasIndex(u => u.PhoneNumber).IsUnique();
+            builder.Property(u => u.City).HasMaxLength(100);
+            builder.Property(u => u.Picture).HasMaxLength(250);
         }
     }
 }

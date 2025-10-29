@@ -2,14 +2,13 @@
 using AspNetCoreIdentityApp.Domain.Entities;
 using Mediator;
 using Microsoft.AspNetCore.Identity;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.ResetPassword
+namespace AspNetCoreIdentityApp.Application.Features.Users.Commands.ResetPassword
 {
-    public record ResetPasswordAuthCommandRequest(string UserId, string Token, string Password) : IRequest<Result<string>>;
-    public sealed class ResetPasswordAuthCommandHandler(UserManager<User> _userManager) : IRequestHandler<ResetPasswordAuthCommandRequest, Result<string>>
+    public record UserResetPasswordCommandRequest(string UserId, string Token, string Password) : IRequest<Result<string>>;
+    public sealed class UserResetPasswordCommandHandler(UserManager<User> _userManager) : IRequestHandler<UserResetPasswordCommandRequest, Result<string>>
     {
-        public async ValueTask<Result<string>> Handle(ResetPasswordAuthCommandRequest request, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> Handle(UserResetPasswordCommandRequest request, CancellationToken cancellationToken)
         {
             User? hasUser = await _userManager.FindByIdAsync(request.UserId);
 
