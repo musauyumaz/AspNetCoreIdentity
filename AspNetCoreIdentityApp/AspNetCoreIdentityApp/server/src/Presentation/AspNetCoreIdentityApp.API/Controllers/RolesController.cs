@@ -1,5 +1,8 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
 using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Add;
+using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Update;
+using AspNetCoreIdentityApp.Application.Features.Roles.DTOs;
+using AspNetCoreIdentityApp.Application.Features.Roles.Queries.Get;
 using AspNetCoreIdentityApp.Application.Features.Roles.Queries.GetAll;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +23,21 @@ namespace AspNetCoreIdentityApp.API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery]RoleGetAllQueryRequest roleGetAllQueryRequest)
         {
-            Result<List<Application.Features.Roles.DTOs.RoleDTO>> data = await _mediator.Send(roleGetAllQueryRequest);
+            Result<List<RoleDTO>> data = await _mediator.Send(roleGetAllQueryRequest);
+            return StatusCode((int)data.StatusCode, data);
+        }
+
+        [HttpGet("Get/{Id}")]
+        public async Task<IActionResult> Get([FromRoute] string Id)
+        {
+            Result<RoleDTO> data = await _mediator.Send(new RoleGetQueryRequest(Id));
+            return StatusCode((int)data.StatusCode, data);
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update(RoleUpdateCommandRequest roleUpdateCommandRequest)
+        {
+            Result<string> data = await _mediator.Send(roleUpdateCommandRequest);
             return StatusCode((int)data.StatusCode, data);
         }
     }
