@@ -1,8 +1,14 @@
-﻿@using System.Security.Claims
+﻿@model UserResponseDTO
 @{
     ViewData["Title"] = "Index";
 }
 
+
+<div class="row">
+    <div class="col-md-6 offset-md-3 text-center">
+        <user-picture-thumbnail picture="@Model.Picture" style="width:300px" class="rounded"/>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
@@ -17,9 +23,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>@User.FindFirst(ClaimTypes.Name)?.Value</td>
-                    <td>@User.FindFirst(ClaimTypes.Email)?.Value</td>
-                    <td>@User.FindFirst(ClaimTypes.MobilePhone)?.Value</td>
+                    <td>@Model.UserName</td>
+                    <td>@Model.Email</td>
+                    <td>@Model.PhoneNumber</td>
                 </tr>
             </tbody>
         </table>

@@ -18,7 +18,12 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
     {
         public async Task SignOut() => await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        public IActionResult Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            ApiResult<UserResponseDTO> result = await _httpClientService.GetAsync<ApiResult<UserResponseDTO>>(new(Controller: "Users", Action: "FindById"), User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return View(result.Data);
+        }
         public IActionResult PasswordChange() => View();
         [HttpPost]
         public async Task<IActionResult> PasswordChange(PasswordChangeViewModel passwordChangeRequestDTO)
@@ -70,6 +75,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
                 }, "Value", "Text");
                 return View(editUserViewModel);
             }
+            string randomFileName = string.Empty;
 
             if (editUserViewModel.Picture is not null && editUserViewModel.Picture.Length > 0)
             {
@@ -78,7 +84,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
                 if (!Directory.Exists(userPicturesPath))
                     Directory.CreateDirectory(userPicturesPath);
 
-                string randomFileName = $"{Guid.NewGuid()}{Path.GetExtension(editUserViewModel.Picture.FileName)}";
+                randomFileName = $"{Guid.NewGuid()}{Path.GetExtension(editUserViewModel.Picture.FileName)}";
                 string newPicturePath = Path.Combine(userPicturesPath, randomFileName);
 
                 using var stream = new FileStream(newPicturePath, FileMode.Create);
@@ -92,7 +98,7 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
                 editUserViewModel.PhoneNumber,
                 editUserViewModel.BirthDate ?? DateTime.MinValue,
                 editUserViewModel.City ?? string.Empty,
-                editUserViewModel.Picture is not null ? editUserViewModel.Picture.FileName : string.Empty,
+                editUserViewModel.Picture is not null ? randomFileName : string.Empty,
                 editUserViewModel.Gender ?? 0
                 ));
 
