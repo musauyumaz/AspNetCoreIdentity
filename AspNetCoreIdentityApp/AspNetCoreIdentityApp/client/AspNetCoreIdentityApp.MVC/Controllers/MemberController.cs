@@ -73,14 +73,16 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
             if (editUserViewModel.Picture is not null && editUserViewModel.Picture.Length > 0)
             {
-                IDirectoryContents? wwrootFolder = _fileProvider.GetDirectoryContents("wwwroot");
-                string? randomFileName = $"{Guid.NewGuid()}{Path.GetExtension(editUserViewModel.Picture.FileName)}";
+                string userPicturesPath = Path.Combine("wwwroot", "UserPictures");
 
-                string? newPicturePath = Path.Combine(wwrootFolder.First(x => x.Name == "UserPictures").PhysicalPath ?? string.Empty, randomFileName);
+                if (!Directory.Exists(userPicturesPath))
+                    Directory.CreateDirectory(userPicturesPath);
+
+                string randomFileName = $"{Guid.NewGuid()}{Path.GetExtension(editUserViewModel.Picture.FileName)}";
+                string newPicturePath = Path.Combine(userPicturesPath, randomFileName);
 
                 using var stream = new FileStream(newPicturePath, FileMode.Create);
                 await editUserViewModel.Picture.CopyToAsync(stream);
-
             }
 
             var updatedUserResult = await _httpClientService.PutAsync<EditUserDTO, ApiResult<string>>(new(Controller: "Users", Action: "Update"), new EditUserDTO(

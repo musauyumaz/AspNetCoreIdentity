@@ -61,7 +61,7 @@
             <div class="row mb-3">
                 <label class="col-md-4 col-form-label" asp-for="Gender"></label>
                 <div class="col-md-8">
-                    <select class="form-control" asp-items="@ViewBag.genderList">
+                    <select class="form-control" asp-for="Gender" asp-items="@ViewBag.genderList">
                         <option value="" disabled selected>Cinsiyet Seçiniz</option>
                     </select>
                     <span asp-validation-for="Gender" class="text-danger"></span>
