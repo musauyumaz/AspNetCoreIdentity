@@ -1,5 +1,6 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
 using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Add;
+using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Delete;
 using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Update;
 using AspNetCoreIdentityApp.Application.Features.Roles.DTOs;
 using AspNetCoreIdentityApp.Application.Features.Roles.Queries.Get;
@@ -38,6 +39,13 @@ namespace AspNetCoreIdentityApp.API.Controllers
         public async Task<IActionResult> Update(RoleUpdateCommandRequest roleUpdateCommandRequest)
         {
             Result<string> data = await _mediator.Send(roleUpdateCommandRequest);
+            return StatusCode((int)data.StatusCode, data);
+        }
+
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] string Id)
+        {
+            Result<string> data = await _mediator.Send(new RoleDeleteCommandRequest(Id));
             return StatusCode((int)data.StatusCode, data);
         }
     }
