@@ -1,4 +1,5 @@
 ﻿using AspNetCoreIdentityApp.MVC.Areas.Admin.Models.DTOs;
+using AspNetCoreIdentityApp.MVC.Areas.Admin.Models.ViewModels;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,11 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class RoleController(IHttpClientService _httpClientService) : Controller
     {
-        public IActionResult Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            var data = await _httpClientService.GetAsync<ApiResult<List<RoleViewModel>>>(new(Controller: "Roles", Action: "GetAll"));
+            return View(data.Data);
+        }
 
         public IActionResult Add() => View();
         [HttpPost]
