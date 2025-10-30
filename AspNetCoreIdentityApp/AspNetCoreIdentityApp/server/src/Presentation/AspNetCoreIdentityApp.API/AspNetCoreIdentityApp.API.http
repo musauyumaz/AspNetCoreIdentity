@@ -30,3 +30,6 @@ Content-Type: application/json
 ###
 
 GET {{AspNetCoreIdentityApp.API_HostAddress}}/Users/FindById/ed180549-fd4d-4ea5-bb1a-c7dbf5fa25a8
+
+###
+GET GET {{AspNetCoreIdentityApp.API_HostAddress}}/Roles/GetUserRoles/ed180549-fd4d-4ea5-bb1a-c7dbf5fa25a8

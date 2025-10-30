@@ -1,8 +1,10 @@
 ﻿using AspNetCoreIdentityApp.Application.Commons.Results;
 using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Add;
+using AspNetCoreIdentityApp.Application.Features.Roles.Commands.AssignRole;
 using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Delete;
 using AspNetCoreIdentityApp.Application.Features.Roles.Commands.Update;
 using AspNetCoreIdentityApp.Application.Features.Roles.DTOs;
+using AspNetCoreIdentityApp.Application.Features.Roles.Queries;
 using AspNetCoreIdentityApp.Application.Features.Roles.Queries.Get;
 using AspNetCoreIdentityApp.Application.Features.Roles.Queries.GetAll;
 using Mediator;
@@ -22,7 +24,7 @@ namespace AspNetCoreIdentityApp.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll([FromQuery]RoleGetAllQueryRequest roleGetAllQueryRequest)
+        public async Task<IActionResult> GetAll([FromQuery] RoleGetAllQueryRequest roleGetAllQueryRequest)
         {
             Result<List<RoleDTO>> data = await _mediator.Send(roleGetAllQueryRequest);
             return StatusCode((int)data.StatusCode, data);
@@ -46,6 +48,20 @@ namespace AspNetCoreIdentityApp.API.Controllers
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
             Result<string> data = await _mediator.Send(new RoleDeleteCommandRequest(Id));
+            return StatusCode((int)data.StatusCode, data);
+        }
+
+        [HttpGet("GetUserRoles/{id}")]
+        public async Task<IActionResult> GetUserRoles([FromRoute] string id)
+        {
+            Result<Dictionary<string, GetUserRoleDTO>> data = await _mediator.Send(new GetUserRolesQueryRequest(id));
+            return StatusCode((int)data.StatusCode, data);
+        }
+
+        [HttpPost("AssignRolesToUser")]
+        public async Task<IActionResult> AssignRoleToUser(AssignRoleToUserCommandRequest assignRoleToUserCommandRequest)
+        {
+            Result<string> data = await _mediator.Send(assignRoleToUserCommandRequest);
             return StatusCode((int)data.StatusCode, data);
         }
     }
