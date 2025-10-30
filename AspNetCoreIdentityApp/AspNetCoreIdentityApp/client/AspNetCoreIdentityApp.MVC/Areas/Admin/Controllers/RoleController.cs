@@ -66,5 +66,27 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
             TempData["SuccessMessage"] = "Rol silme işlemi başarılı.";
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> AssignRoleToUser(string id)
+        {
+            var result = await _httpClientService.GetAsync<ApiResult<Dictionary<string, AssignRoleToUserViewModel>>>(new(Controller: "Roles", Action: "GetUserRoles"), id);
+            ViewBag.userId = id;
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignRoleToUser(AssignRoleDTO request)
+        {
+            ApiResult<string>? result = await _httpClientService.PostAsync<AssignRoleDTO, ApiResult<string>>(
+      new(Controller: "Roles", Action: "AssignRolesToUser"), request);
+
+            if (!result.IsSucceed)
+            {
+                ModelState.AddModelError("", result.ErrorMessage ?? "");
+                return View();
+            }
+
+            return RedirectToAction("UserList", "Home");
+        }
     }
 }
