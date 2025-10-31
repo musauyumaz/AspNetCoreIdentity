@@ -25,6 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.Name = "AppCookie";
         options.LoginPath = new("/Home/SignIn");
         options.LogoutPath = new("/Member/SignOut");
+        options.AccessDeniedPath = new("/Member/AccessDenied");
         options.ExpireTimeSpan = TimeSpan.FromDays(60);
         options.SlidingExpiration = true;
     });
@@ -50,7 +51,7 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
-    name: "default",
+    name: "admin",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 

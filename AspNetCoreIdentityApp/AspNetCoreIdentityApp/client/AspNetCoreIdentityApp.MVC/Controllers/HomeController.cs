@@ -59,6 +59,22 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
                     new(ClaimTypes.MobilePhone, data.Data?.PhoneNumber ?? string.Empty)
                 };
 
+                if (data.Data?.Roles is not null && data.Data.Roles.Any())
+                {
+                    data.Data.Roles.ForEach(role =>
+                    {
+                        claims.Add(new(ClaimTypes.Role, role));
+                        System.Diagnostics.Debug.WriteLine($"Claim ekleniyor: {role}");
+                    });
+
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Claims toplam sayısı: {claims.Count}");
+                foreach (var claim in claims)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Claim: {claim.Type} = {claim.Value}");
+                }
+
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(claimsIdentity);
 

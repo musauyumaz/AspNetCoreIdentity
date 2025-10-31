@@ -2,6 +2,7 @@
 using AspNetCoreIdentityApp.MVC.Areas.Admin.Models.ViewModels;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,12 +11,14 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class RoleController(IHttpClientService _httpClientService) : Controller
     {
+        [Authorize(Roles ="Admin,role-action")]
         public async Task<IActionResult> Index()
         {
             ApiResult<List<RoleViewModel>>? data = await _httpClientService.GetAsync<ApiResult<List<RoleViewModel>>>(new(Controller: "Roles", Action: "GetAll"));
             return View(data.Data);
         }
 
+        [Authorize(Roles = "Admin,role-action")]
         public IActionResult Add() => View();
         [HttpPost]
         public async Task<IActionResult> Add(AddRoleDTO addRoleDTO)
@@ -32,13 +35,14 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
             TempData["SuccessMessage"] = "Rol ekleme işlemi başarılı.";
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Admin,role-action")]
         public async Task<IActionResult> UpdateAsync(string id)
         {
             ApiResult<UpdateRoleDTO>? result = await _httpClientService.GetAsync<ApiResult<UpdateRoleDTO>>(new(Controller: "Roles", Action: "Get"), id);
             return View(result.Data);
         }
 
+        [Authorize(Roles = "Admin,role-action")]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateRoleDTO updateRoleDTO)
         {
@@ -55,6 +59,7 @@ namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin,role-action")]
         public async Task<IActionResult> Delete(string id)
         {
             ApiResult<string>? result = await _httpClientService.DeleteAsync<ApiResult<string>>(new(Controller: "Roles", Action: "Delete"), id);

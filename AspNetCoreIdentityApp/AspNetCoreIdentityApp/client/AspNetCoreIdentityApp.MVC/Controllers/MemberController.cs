@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
 using System.Security.Claims;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AspNetCoreIdentityApp.MVC.Controllers
 {
@@ -109,6 +108,14 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             }
 
             TempData["SuccessMessage"] = "Kullanıcı bilgileri başarıyla güncellendi.";
+            return View();
+        }
+
+        public IActionResult AccessDenied(string returnUrl)
+        {
+            string message = string.Empty;
+            message = "Bu sayfaya erişim yetkiniz bulunmamaktadır. Yetki almak için yöneticiniz ile görüşün";
+            ViewBag.message = message;
             return View();
         }
     }
