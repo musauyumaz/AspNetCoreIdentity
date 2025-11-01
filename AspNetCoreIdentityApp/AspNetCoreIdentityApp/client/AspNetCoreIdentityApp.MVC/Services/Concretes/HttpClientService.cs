@@ -13,7 +13,7 @@ namespace AspNetCoreIdentityApp.MVC.Services.Concretes
         {
             StringBuilder urlBuilder = new StringBuilder();
             urlBuilder.Append(Url(requestParameter));
-            urlBuilder.Append(!String.IsNullOrEmpty(id) ? "/" + id : "");
+            urlBuilder.Append(!String.IsNullOrEmpty(id) ? "" + id : "");
             HttpResponseMessage httpResponseMessage = await _httpClient.DeleteAsync(urlBuilder.ToString());
             TResponse? result = await httpResponseMessage.Content.ReadFromJsonAsync<TResponse>(_jsonOptions);
             return result!;

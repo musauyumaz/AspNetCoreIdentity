@@ -1,11 +1,13 @@
-﻿using AspNetCoreIdentityApp.MVC.Areas.Admin.Models;
+﻿using AspNetCoreIdentityApp.MVC.Areas.Admin.Models.ViewModels;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreIdentityApp.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "admin")]
     public class HomeController(IHttpClientService _httpClientService) : Controller
     {
         public IActionResult Index()

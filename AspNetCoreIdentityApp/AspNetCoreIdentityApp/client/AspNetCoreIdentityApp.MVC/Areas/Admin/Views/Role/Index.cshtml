@@ -1,0 +1,46 @@
+﻿@using AspNetCoreIdentityApp.MVC.Areas.Admin.Models.ViewModels
+@model List<RoleViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row">
+    @if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert alert-info" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <div class="col-md-6 offset-md-2">
+        <h2>Roller</h2>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-primary mb-3" asp-controller="Role" asp-action="Add" asp-area="Admin">Role Ekle</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Role Adı</th>
+                    <th>Güncelle</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>@role.Name</td>
+                        <td><a class="btn btn-sm btn-warning" asp-area="Admin" asp-controller="Role" asp-action="Update" asp-route-id="@role.Id">Güncelle</a></td>
+                        <td><a class="btn btn-sm btn-danger my-1" asp-area="Admin" asp-controller="Role" asp-action="Delete" asp-route-id="@role.Id">Sil</a></td>
+                    </tr>
+                }
+        </table>
+    </div>
+</div>
+
