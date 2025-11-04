@@ -1,4 +1,4 @@
-using AspNetCoreIdentityApp.MVC.Models;
+﻿using AspNetCoreIdentityApp.MVC.Models;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Concretes;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -31,6 +31,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AnkaraPolicy", policy =>
+    {
+        policy.RequireClaim("city", "Ankara");
+        //policy.RequireClaim("city", "Eskişehir", "Ankara");
+    });
+});
 
 
 var app = builder.Build();
