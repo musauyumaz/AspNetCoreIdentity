@@ -1,7 +1,9 @@
 ﻿using AspNetCoreIdentityApp.Domain.Entities;
 using AspNetCoreIdentityApp.Persistence.Contexts;
+using AspNetCoreIdentityApp.Persistence.Identity.ClaimProviders;
 using AspNetCoreIdentityApp.Persistence.Identity.Localizations;
 using AspNetCoreIdentityApp.Persistence.Identity.Validations;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,5 +49,7 @@ public static class ServiceRegistration
         {
             options.ValidationInterval = TimeSpan.FromMinutes(60);
         });
+
+        services.AddScoped<IClaimsTransformation, UserClaimProvider>();
     }
 }
