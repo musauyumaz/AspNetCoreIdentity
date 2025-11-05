@@ -12,10 +12,22 @@ namespace AspNetCoreIdentityApp.Application.Features.Auths.Commands.SignUp
     {
         public async ValueTask<Result<UserDTO>> Handle(AuthSignUpCommandRequest request, CancellationToken cancellationToken)
         {
-            var data = await _userManager.CreateAsync(request.Adapt<User>(),request.PasswordConfirm);
-            return data.Succeeded
-                ? Result<UserDTO>.Success(request.Adapt<UserDTO>())
-                : Result<UserDTO>.Fail(string.Join(",\n", data.Errors.Select(e => e.Description)));
+            var user = request.Adapt<User>();   
+            var data = await _userManager.CreateAsync(user, request.PasswordConfirm);
+
+            if (!data.Succeeded)
+            {
+                Result<UserDTO>.Fail(string.Join(",\n", data.Errors.Select(e => e.Description)));
+            }
+
+            var claimResult = await _userManager.AddClaimsAsync(user, new List<System.Security.Claims.Claim>
+            {
+                new System.Security.Claims.Claim("ExchangeExpireDate", DateTime.Now.AddDays(10).ToString())
+            });
+
+            return claimResult.Succeeded
+                ? Result<UserDTO>.Success(user.Adapt<UserDTO>())
+                : Result<UserDTO>.Fail(string.Join(",\n", claimResult.Errors.Select(e => e.Description)));
         }
     }
 }
