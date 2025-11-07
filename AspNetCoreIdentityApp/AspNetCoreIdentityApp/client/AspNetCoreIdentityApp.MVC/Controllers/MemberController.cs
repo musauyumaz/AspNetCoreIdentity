@@ -137,5 +137,11 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         {
             return View();
         }
+
+        [Authorize(Policy = "ViolencePolicy")]
+        public IActionResult ViolencePage()
+        {
+            return View();
+        }
     }
 }
