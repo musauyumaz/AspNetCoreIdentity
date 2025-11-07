@@ -53,6 +53,13 @@ builder.Services.AddAuthorization(options =>
     {
         policy.AddRequirements(new ViolenceRequirement() { ThresoldAge = 18});
     });
+
+    options.AddPolicy("OrderPermissionReadOrDelete", policy =>
+    {
+        policy.RequireClaim("Permission", "Order.Read");
+        policy.RequireClaim("Permission", "Order.Delete");
+        policy.RequireClaim("Permission", "Stock.Delete");
+    });
 });
 
 
