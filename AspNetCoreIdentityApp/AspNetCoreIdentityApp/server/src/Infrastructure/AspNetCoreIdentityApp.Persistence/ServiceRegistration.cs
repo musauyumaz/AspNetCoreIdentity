@@ -13,7 +13,7 @@ namespace AspNetCoreIdentityApp.Persistence;
 
 public static class ServiceRegistration
 {
-    public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+    public static async Task AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
         {
