@@ -1,7 +1,9 @@
 ﻿using AspNetCoreIdentityApp.MVC.Models;
+using AspNetCoreIdentityApp.MVC.Requirements;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Concretes;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 
@@ -31,6 +33,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+builder.Services.AddScoped<IAuthorizationHandler, ExchangeExpireRequirementHandler>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -38,6 +41,11 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireClaim("city", "Ankara");
         //policy.RequireClaim("city", "Eskişehir", "Ankara");
+    });
+
+    options.AddPolicy("ExchangePolicy", policy =>
+    {
+        policy.AddRequirements(new ExchangeExpireRequirement());
     });
 });
 

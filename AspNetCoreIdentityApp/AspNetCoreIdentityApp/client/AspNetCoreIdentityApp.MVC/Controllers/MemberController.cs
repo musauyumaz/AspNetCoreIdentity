@@ -131,5 +131,11 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
         {
             return View();
         }
+
+        [Authorize(Policy = "ExchangePolicy")]
+        public IActionResult ExchangePage()
+        {
+            return View();
+        }
     }
 }
