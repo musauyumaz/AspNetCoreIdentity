@@ -56,7 +56,9 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
                     new(ClaimTypes.NameIdentifier, data.Data?.Id ?? string.Empty),
                     new(ClaimTypes.Name, data.Data?.UserName ?? string.Empty),
                     new(ClaimTypes.Email, data.Data?.Email ?? string.Empty),
-                    new(ClaimTypes.MobilePhone, data.Data?.PhoneNumber ?? string.Empty)
+                    new(ClaimTypes.MobilePhone, data.Data?.PhoneNumber ?? string.Empty),
+                    new("city",data.Data?.City ?? string.Empty),
+                    new("birthdate", data.Data?.BirthDate.ToString() ?? string.Empty)
                 };
 
                 if (data.Data?.Roles is not null && data.Data.Roles.Any())

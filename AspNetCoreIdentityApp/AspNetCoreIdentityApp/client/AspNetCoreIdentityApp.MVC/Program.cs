@@ -1,7 +1,9 @@
-using AspNetCoreIdentityApp.MVC.Models;
+﻿using AspNetCoreIdentityApp.MVC.Models;
+using AspNetCoreIdentityApp.MVC.Requirements;
 using AspNetCoreIdentityApp.MVC.Services.Abstractions;
 using AspNetCoreIdentityApp.MVC.Services.Concretes;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 
@@ -31,6 +33,48 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+builder.Services.AddScoped<IAuthorizationHandler, ExchangeExpireRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, ViolenceRequirementHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AnkaraPolicy", policy =>
+    {
+        policy.RequireClaim("city", "Ankara");
+        //policy.RequireClaim("city", "Eskişehir", "Ankara");
+    });
+
+    options.AddPolicy("ExchangePolicy", policy =>
+    {
+        policy.AddRequirements(new ExchangeExpireRequirement());
+    });
+
+    options.AddPolicy("ViolencePolicy", policy =>
+    {
+        policy.AddRequirements(new ViolenceRequirement() { ThresoldAge = 18});
+    });
+
+    options.AddPolicy("OrderPermissionReadOrDelete", policy =>
+    {
+        policy.RequireClaim("Permission", "Order.Read");
+        policy.RequireClaim("Permission", "Order.Delete");
+        policy.RequireClaim("Permission", "Stock.Delete");
+    });
+
+    options.AddPolicy("Order.Read", policy =>
+    {
+        policy.RequireClaim("Permission", "Order.Read");
+    });
+
+    options.AddPolicy("Order.Delete", policy =>
+    {
+        policy.RequireClaim("Permission", "Order.Delete");
+    });
+    options.AddPolicy("Stock.Delete", policy =>
+    {
+        policy.RequireClaim("Permission", "Stock.Delete");
+    });
+});
 
 
 var app = builder.Build();

@@ -17,8 +17,10 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+await app.Services.SeedDataAsync();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

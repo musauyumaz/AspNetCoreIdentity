@@ -45,13 +45,15 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
 
             ApiResult<UserResponseDTO> result = await _httpClientService.GetAsync<ApiResult<UserResponseDTO>>(new(Controller: "Users", Action: "FindById"), User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            EditUserViewModel editUserViewModel = new() { 
+            EditUserViewModel editUserViewModel = new()
+            {
                 UserName = result.Data.UserName,
                 BirthDate = result.Data.BirthDate,
                 City = result.Data.City,
                 Email = result.Data.Email,
                 Gender = result.Data.Gender,
-                PhoneNumber = result.Data.PhoneNumber };
+                PhoneNumber = result.Data.PhoneNumber
+            };
 
             ViewBag.genderList = new SelectList(new[]
             {
@@ -116,6 +118,29 @@ namespace AspNetCoreIdentityApp.MVC.Controllers
             string message = string.Empty;
             message = "Bu sayfaya erişim yetkiniz bulunmamaktadır. Yetki almak için yöneticiniz ile görüşün";
             ViewBag.message = message;
+            return View();
+        }
+
+        public IActionResult Claims()
+        {
+            var userClaimList = User.Claims.Select(c => new ClaimViewModel(c.Issuer, c.Type, c.Value)).ToList();
+            return View(userClaimList);
+        }
+        [Authorize(Policy = "AnkaraPolicy")]
+        public IActionResult AnkaraPage()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "ExchangePolicy")]
+        public IActionResult ExchangePage()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "ViolencePolicy")]
+        public IActionResult ViolencePage()
+        {
             return View();
         }
     }
